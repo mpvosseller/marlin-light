@@ -32,6 +32,9 @@
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wp1-81-tAO">
                                 <rect key="frame" x="329" y="617" width="30" height="30"/>
                                 <state key="normal" image="cog"/>
+                                <connections>
+                                    <action selector="handleSettingsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uau-bi-9nf"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" alpha="0.029999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marlin" translatesAutoresizingMaskIntoConstraints="NO" id="vAj-3p-YYu" userLabel="Image">
                                 <rect key="frame" x="47" y="144.5" width="280" height="490"/>
