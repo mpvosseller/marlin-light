@@ -56,13 +56,13 @@
 		B9F954D41ED3BED7004D0238 /* marlin-light */ = {
 			isa = PBXGroup;
 			children = (
+				B9F954E11ED3BED7004D0238 /* Info.plist */,
+				B9F954DC1ED3BED7004D0238 /* Assets.xcassets */,
 				B9F954D51ED3BED7004D0238 /* AppDelegate.swift */,
 				B9F954D71ED3BED7004D0238 /* ViewController.swift */,
 				B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */,
 				B9F954D91ED3BED7004D0238 /* Main.storyboard */,
-				B9F954DC1ED3BED7004D0238 /* Assets.xcassets */,
 				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
-				B9F954E11ED3BED7004D0238 /* Info.plist */,
 			);
 			path = "marlin-light";
 			sourceTree = "<group>";
