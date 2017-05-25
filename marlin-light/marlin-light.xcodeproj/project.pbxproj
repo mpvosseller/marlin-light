@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B94ECBFB1ED4CC8C00C82535 /* SettingsPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */; };
 		B9F954D61ED3BED7004D0238 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D51ED3BED7004D0238 /* AppDelegate.swift */; };
 		B9F954D81ED3BED7004D0238 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D71ED3BED7004D0238 /* ViewController.swift */; };
 		B9F954DB1ED3BED7004D0238 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9F954D91ED3BED7004D0238 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPopoverView.swift; sourceTree = "<group>"; };
 		B9F954D21ED3BED7004D0238 /* marlin-light.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "marlin-light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F954D51ED3BED7004D0238 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9F954D71ED3BED7004D0238 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				B9F954D51ED3BED7004D0238 /* AppDelegate.swift */,
 				B9F954D71ED3BED7004D0238 /* ViewController.swift */,
+				B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */,
 				B9F954D91ED3BED7004D0238 /* Main.storyboard */,
 				B9F954DC1ED3BED7004D0238 /* Assets.xcassets */,
 				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B94ECBFB1ED4CC8C00C82535 /* SettingsPopoverView.swift in Sources */,
 				B9F954D81ED3BED7004D0238 /* ViewController.swift in Sources */,
 				B9F954D61ED3BED7004D0238 /* AppDelegate.swift in Sources */,
 			);
