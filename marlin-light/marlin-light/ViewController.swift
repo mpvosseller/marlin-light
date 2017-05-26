@@ -13,6 +13,11 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
     var settingsPopover : SettingsPopover?
     @IBOutlet var settingsButton: UIButton?
     
+    let numColors = 16
+    let numColumns = 4
+    let saturation = 60 // 0-100
+    let brightness = 85 // 0-100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSettingsView()
@@ -26,7 +31,6 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
         
         let popover = SettingsPopover()
         popover.delegate = self
-        popover.colors = self.availableColors
         self.view.addSubview(popover)
         self.settingsPopover = popover
         
@@ -43,6 +47,9 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.height, relatedBy:.equal, toItem:nil, attribute:.height, multiplier:1.0, constant:275))
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:-6.0))
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:-6.0))
+        
+        
+        popover.reloadColors()
     }
     
     func isSettingsPopoverVisible() -> Bool {
@@ -85,30 +92,6 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
         }
     }
     
-    lazy var availableColors : [UIColor] = {
-        
-        let totalColors = 16
-        var colors : [UIColor] = []
-        
-        // hardcoded colors
-        colors.append(UIColor.white)
-        
-        // auto generated colors
-        
-        // hue 0-360
-        let numToGenerate = totalColors - colors.count
-        let hueStep = 360.0 / Double(numToGenerate)
-        var hue = 0.0
-        
-        while (colors.count < totalColors) {
-            let color = UIColor(hue:CGFloat(hue/360.0), saturation:60.0/100.0, brightness:85.0/100.0, alpha:1.0)
-            colors.append(color)
-            hue += hueStep
-        }
-        
-        return colors
-    }()
-    
     @IBAction func handleSettingsButtonPressed(_ sender: Any) {
         toggleSettingsPopover()
     }
@@ -125,8 +108,37 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
         }
     }
     
-    func settingsPopoverDidSelectColor(_ color:UIColor) {
+    
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
+        let color = self.settingsPopover(settingsPopover, colorAt: index)
         self.view.backgroundColor = color
     }
+    
+    func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
+        return self.numColors
+    }
+    
+    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int {
+        return self.numColumns
+    }
+    
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
+        if index >= self.numColors {
+            fatalError()
+        }
+        
+        if index == 0 {
+            return UIColor(hue:0.0, saturation:0.0, brightness:CGFloat(self.brightness)/100.0, alpha:1.0)
+        } else {
+            let hueStep = 360.0 / Double(numColors - 1)
+            let hue = hueStep * Double((index - 1))
+            return UIColor(hue:CGFloat(hue/360.0), saturation:CGFloat(self.saturation)/100.0, brightness:CGFloat(self.brightness)/100.0, alpha:1.0)
+        }
+    }
+    
+    
+    
 }
 

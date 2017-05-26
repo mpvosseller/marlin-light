@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 protocol SettingsPopoverDelegate: class {
-    func settingsPopoverDidSelectColor(_ color:UIColor)
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
+    func numberOfColors(in settingsPopover: SettingsPopover) -> Int
+    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int
+    func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor
 }
 
 class SettingsPopover: UIView {
@@ -20,12 +23,6 @@ class SettingsPopover: UIView {
     var buttonPanel : UIView!
     var buttons : [UIButton]!
     weak var delegate : SettingsPopoverDelegate?
-    
-    var colors : [UIColor]? {
-        didSet {
-            setupButtons()
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -90,24 +87,30 @@ class SettingsPopover: UIView {
         // XXX we need to remove all the old constraints related to these buttons also
     }
     
-    func setupButtons() {
+    func reloadColors() {
         
         // remove the old buttons
         removeButtons()
         
+        guard let delegate = self.delegate else {
+            return
+        }
+        
+        let numColors = delegate.numberOfColors(in:self)
+        
         // create a button for each color
-        if let colors = self.colors {
-            for color in colors {
-                let button = UIButton()
-                button.translatesAutoresizingMaskIntoConstraints = false
-                button.layer.cornerRadius = 8.0
-                button.backgroundColor = color
-                buttons.append(button)
-                
-                button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
-                
-                buttonPanel.addSubview(button)
-            }
+        for index in 0..<numColors {
+            
+            let color = delegate.settingsPopover(self, colorAt:index)
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.layer.cornerRadius = 8.0
+            button.backgroundColor = color
+            buttons.append(button)
+            
+            button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
+            
+            buttonPanel.addSubview(button)
         }
         
         // layout the buttons and button panel
@@ -172,7 +175,14 @@ class SettingsPopover: UIView {
     }
     
     @objc func colorButtonPressed(_ button:UIButton) {
-        self.delegate?.settingsPopoverDidSelectColor(button.backgroundColor!)
+        
+        guard let delegate = self.delegate else {
+            return
+        }
+        
+        if let index = self.buttons.index(of:button) {
+            delegate.settingsPopover(self, didSelectIndex:index)
+        }
     }
     
 }
