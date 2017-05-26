@@ -8,22 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController, SettingsPopoverDelegate {
-
+class ViewController: UIViewController {
+    
     static let numColors = 16
     static let numColumns = 4
-        
-    var settingsPopover : SettingsPopover?
+    
     @IBOutlet var settingsButton: UIButton?
     let saturation = 60 // 0-100
     let brightness = 85 // 0-100
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupSettingsView()
-    }
-    
-    func setupSettingsView() {
+    lazy var settingsPopover : SettingsPopover = {
         
         if !self.isViewLoaded {
             fatalError()
@@ -48,15 +42,15 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:-6.0))
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:-6.0))
         
-        
         popover.reloadColors()
-    }
+        
+        return popover
+    }()
+    
     
     func isSettingsPopoverVisible() -> Bool {
         
-        guard let popover = self.settingsPopover else {
-            fatalError()
-        }
+        let popover = self.settingsPopover
         
         if popover.alpha > 0 {
             return true
@@ -79,9 +73,8 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
     
     func toggleSettingsPopover() {
         
-        guard let popover = self.settingsPopover else {
-            fatalError()
-        }
+        let popover = self.settingsPopover
+        
         
         UIView.animate(withDuration: 0.10) {
             if popover.alpha > 0 {
@@ -107,8 +100,10 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
             }
         }
     }
-    
-    
+}
+
+
+extension ViewController : SettingsPopoverDelegate {
     
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
         let color = self.settingsPopover(settingsPopover, colorAt: index)
@@ -137,8 +132,6 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
             return UIColor(hue:CGFloat(hue/360.0), saturation:CGFloat(self.saturation)/100.0, brightness:CGFloat(self.brightness)/100.0, alpha:1.0)
         }
     }
-    
-    
     
 }
 
