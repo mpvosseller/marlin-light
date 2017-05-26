@@ -125,10 +125,6 @@ class ViewController: UIViewController {
 
 extension ViewController : SettingsPopoverDelegate {
     
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
-        setBackgroundColor(colorAtIndex(index))
-    }
-    
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
         return ViewController.numColors
     }
@@ -139,6 +135,10 @@ extension ViewController : SettingsPopoverDelegate {
     
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
         return colorAtIndex(index)
+    }
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
+        setBackgroundColor(colorAtIndex(index))
     }
 }
 
