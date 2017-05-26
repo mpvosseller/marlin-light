@@ -100,25 +100,8 @@ class ViewController: UIViewController {
             }
         }
     }
-}
-
-
-extension ViewController : SettingsPopoverDelegate {
     
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
-        let color = self.settingsPopover(settingsPopover, colorAt: index)
-        self.view.backgroundColor = color
-    }
-    
-    func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
-        return ViewController.numColors
-    }
-    
-    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int {
-        return ViewController.numColumns
-    }
-    
-    func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
+    func colorAtIndex(_ index:Int) -> UIColor {
         
         if index >= ViewController.numColors {
             fatalError()
@@ -133,5 +116,29 @@ extension ViewController : SettingsPopoverDelegate {
         }
     }
     
+    func setBackgroundColor(_ color:UIColor) {
+        self.view.backgroundColor = color
+    }
+    
+}
+
+
+extension ViewController : SettingsPopoverDelegate {
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
+        setBackgroundColor(colorAtIndex(index))
+    }
+    
+    func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
+        return ViewController.numColors
+    }
+    
+    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int {
+        return ViewController.numColumns
+    }
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
+        return colorAtIndex(index)
+    }
 }
 
