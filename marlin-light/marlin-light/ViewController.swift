@@ -9,12 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController, SettingsPopoverDelegate {
-    
+
+    static let numColors = 16
+    static let numColumns = 4
+        
     var settingsPopover : SettingsPopover?
     @IBOutlet var settingsButton: UIButton?
-    
-    let numColors = 16
-    let numColumns = 4
     let saturation = 60 // 0-100
     let brightness = 85 // 0-100
     
@@ -116,23 +116,23 @@ class ViewController: UIViewController, SettingsPopoverDelegate {
     }
     
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
-        return self.numColors
+        return ViewController.numColors
     }
     
     func numberOfColumns(in settingsPopover: SettingsPopover) -> Int {
-        return self.numColumns
+        return ViewController.numColumns
     }
     
-    
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
-        if index >= self.numColors {
+        
+        if index >= ViewController.numColors {
             fatalError()
         }
         
         if index == 0 {
             return UIColor(hue:0.0, saturation:0.0, brightness:CGFloat(self.brightness)/100.0, alpha:1.0)
         } else {
-            let hueStep = 360.0 / Double(numColors - 1)
+            let hueStep = 360.0 / Double(ViewController.numColors - 1)
             let hue = hueStep * Double((index - 1))
             return UIColor(hue:CGFloat(hue/360.0), saturation:CGFloat(self.saturation)/100.0, brightness:CGFloat(self.brightness)/100.0, alpha:1.0)
         }
