@@ -23,6 +23,46 @@ class ViewController: UIViewController {
     
     @IBOutlet var settingsButton: UIButton?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadHsb()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateBackgroundColor()
+    }
+    
+    func loadHsb() {
+        let userDefaults = UserDefaults.standard
+        
+        if let h = userDefaults.value(forKey:"hue") as? Int {
+            if h >= 0 || h <= 100 {
+                self.hue = h
+            }
+        }
+        
+        if let s = userDefaults.value(forKey:"saturation") as? Int {
+            if s >= 0 || s <= 100 {
+                self.saturation = s
+            }
+        }
+
+        if let b = userDefaults.value(forKey:"brightness") as? Int {
+            if b >= 0 || b <= 100 {
+                self.brightness = b
+            }
+        }
+    }
+    
+    func saveHsb() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(self.hue, forKey:"hue")
+        userDefaults.setValue(self.saturation, forKey:"saturation")
+        userDefaults.setValue(self.brightness, forKey:"brightness")
+        userDefaults.synchronize()
+    }
+    
     lazy var settingsPopover : SettingsPopover = {
         let popover = SettingsPopover()
         popover.delegate = self
@@ -127,10 +167,17 @@ class ViewController: UIViewController {
     }
     
     func selectColorAtIndex(_ index:Int) {
-        let color = colorAtIndex(index)
+        self.hue = hueAtIndex(index)
+        self.saturation = saturationAtIndex(index)
+        updateBackgroundColor()
+        saveHsb()
+    }
+    
+    func updateBackgroundColor() {
+        let color = colorWithCurrentHSB()
         self.view.backgroundColor = color
     }
-
+    
 }
 
 
