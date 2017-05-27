@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     static let numColors = 16
     static let numColumns = 4
     
-    static let defaultHue = 0
+    static let defaultHue = 192
     static let defaultSaturation = 60
     static let defaultBrightness = 85
 
