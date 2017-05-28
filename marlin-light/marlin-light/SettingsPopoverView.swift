@@ -56,7 +56,7 @@ class SettingsPopover: UIView {
     func setupDivider() {
         self.divider = UIView()
         self.divider.translatesAutoresizingMaskIntoConstraints = false
-        self.divider.backgroundColor = self.label.backgroundColor
+        self.divider.backgroundColor = self.label.textColor
         self.addSubview(self.divider)
         
         let views : [String:Any] = ["label" : self.label, "divider" : self.divider]
