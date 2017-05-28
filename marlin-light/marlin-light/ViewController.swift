@@ -14,11 +14,13 @@ class ViewController: UIViewController {
     static let saturationKey = "saturation"
     static let brightnessKey = "brightness"
     
+    @IBOutlet var settingsButton: UIButton?
+    
     let colorPallett = ColorPallett()
     var hue = 0
     var saturation = 0
     var brightness = 0
-    @IBOutlet var settingsButton: UIButton?
+   
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -105,6 +107,13 @@ class ViewController: UIViewController {
         self.hue = self.colorPallett.hueAtIndex(index)
         self.saturation = self.colorPallett.saturationAtIndex(index)
         updateBackgroundColor()
+        saveHsb()
+    }
+    
+    func selectBrightness(_ brightness:Int) {
+        self.brightness = brightness
+        updateBackgroundColor()
+        self.settingsPopover.reloadColors()
         saveHsb()
     }
     
