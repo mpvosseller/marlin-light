@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateBackgroundColor()
+        self.settingsButton?.tintColor = UIColor(white: 0, alpha: 0.5)
     }
     
     func loadHsb() {
