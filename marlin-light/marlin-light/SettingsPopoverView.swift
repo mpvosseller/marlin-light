@@ -11,7 +11,6 @@ import UIKit
 
 protocol SettingsPopoverDelegate: class {
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int
-    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
 }

@@ -10,17 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    static let numColors = 16
-    static let numColumns = 4
+    static let hueKey = "hue"
+    static let saturationKey = "saturation"
+    static let brightnessKey = "brightness"
     
-    static let defaultHue = 192
-    static let defaultSaturation = 60
-    static let defaultBrightness = 85
-
-    var hue = defaultHue // 0-360
-    var saturation = defaultSaturation // 0-100
-    var brightness = defaultBrightness // 0-100
-    
+    let colorPallett = ColorPallett()
+    var hue = 0
+    var saturation = 0
+    var brightness = 0
     @IBOutlet var settingsButton: UIButton?
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,31 +32,16 @@ class ViewController: UIViewController {
     
     func loadHsb() {
         let userDefaults = UserDefaults.standard
-        
-        if let h = userDefaults.value(forKey:"hue") as? Int {
-            if h >= 0 || h <= 100 {
-                self.hue = h
-            }
-        }
-        
-        if let s = userDefaults.value(forKey:"saturation") as? Int {
-            if s >= 0 || s <= 100 {
-                self.saturation = s
-            }
-        }
-
-        if let b = userDefaults.value(forKey:"brightness") as? Int {
-            if b >= 0 || b <= 100 {
-                self.brightness = b
-            }
-        }
+        self.hue = userDefaults.value(forKey:ViewController.hueKey) as? Int ?? colorPallett.defaultHue
+        self.saturation = userDefaults.value(forKey:ViewController.saturationKey) as? Int ?? colorPallett.defaultSaturation
+        self.brightness = userDefaults.value(forKey:ViewController.brightnessKey) as? Int ?? colorPallett.defaultBrightness
     }
     
     func saveHsb() {
         let userDefaults = UserDefaults.standard
-        userDefaults.setValue(self.hue, forKey:"hue")
-        userDefaults.setValue(self.saturation, forKey:"saturation")
-        userDefaults.setValue(self.brightness, forKey:"brightness")
+        userDefaults.setValue(self.hue, forKey:ViewController.hueKey)
+        userDefaults.setValue(self.saturation, forKey:ViewController.saturationKey)
+        userDefaults.setValue(self.brightness, forKey:ViewController.brightnessKey)
         userDefaults.synchronize()
     }
     
@@ -119,80 +101,28 @@ class ViewController: UIViewController {
         return view
     }
     
-    func colorWithHue(_ hue:Int, saturation:Int) -> UIColor {
-        return colorWithHue(hue, saturation:saturation, brightness:self.brightness)
-    }
-    
-    func colorWithCurrentHSB() -> UIColor {
-        return colorWithHue(self.hue, saturation:self.saturation, brightness:self.brightness)
-    }
-    
-    func colorWithHue(_ hue:Int, saturation:Int, brightness:Int) -> UIColor {
-        let hueFloat = CGFloat(hue) / 360.0
-        let saturationFloat = CGFloat(saturation) / 100.0
-        let brightnessFloat = CGFloat(brightness) / 100.0
-        let alphaFloat = CGFloat(1.0)
-        return UIColor(hue:hueFloat, saturation:saturationFloat, brightness:brightnessFloat, alpha:alphaFloat)
-    }
-    
-    func hueAtIndex(_ index:Int) -> Int {
-        if index == 0 {
-            // white
-            return 0
-        } else {
-            let numGeneratedColors = ViewController.numColors - 1 // exclude harcoded colors
-            let hueStep = 360 / Double(numGeneratedColors)
-            let hue = hueStep * Double((index - 1))
-            return Int(hue)
-        }
-    }
-    
-    func saturationAtIndex(_ index:Int) -> Int {
-        if index == 0 {
-            // white
-            return 0
-        } else {
-            return ViewController.defaultSaturation
-        }
-    }
-
-    func colorAtIndex(_ index:Int) -> UIColor {
-        if index >= ViewController.numColors {
-            fatalError()
-        }
-        
-        let hue = hueAtIndex(index)
-        let saturation = saturationAtIndex(index)
-        return colorWithHue(hue, saturation:saturation)
-    }
-    
     func selectColorAtIndex(_ index:Int) {
-        self.hue = hueAtIndex(index)
-        self.saturation = saturationAtIndex(index)
+        self.hue = self.colorPallett.hueAtIndex(index)
+        self.saturation = self.colorPallett.saturationAtIndex(index)
         updateBackgroundColor()
         saveHsb()
     }
     
     func updateBackgroundColor() {
-        let color = colorWithCurrentHSB()
+        let color = self.colorPallett.colorWithHue(self.hue, saturation: self.saturation, brightness: self.brightness)
         self.view.backgroundColor = color
     }
     
 }
 
-
 extension ViewController : SettingsPopoverDelegate {
     
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
-        return ViewController.numColors
-    }
-    
-    func numberOfColumns(in settingsPopover: SettingsPopover) -> Int {
-        return ViewController.numColumns
+        return self.colorPallett.numColors
     }
     
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
-        return colorAtIndex(index)
+        return self.colorPallett.colorAtIndex(index, brightness:self.brightness)
     }
     
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
