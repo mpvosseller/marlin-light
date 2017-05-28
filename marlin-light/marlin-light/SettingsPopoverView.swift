@@ -25,15 +25,15 @@ class SettingsPopover: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
-        setup()
+        commonInit()
     }
-
-    func setup() {
+    
+    func commonInit() {
         setupLabel()
         setupDivider()
         setupButtonPanel()
@@ -47,7 +47,7 @@ class SettingsPopover: UIView {
         self.label.textColor = UIColor(white:0.8, alpha:1.0)
         self.label.font = UIFont.boldSystemFont(ofSize:16)
         self.addSubview(self.label)
-
+        
         let views : [String:Any] = ["label" : self.label]
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-31-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-16-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
@@ -56,7 +56,7 @@ class SettingsPopover: UIView {
     func setupDivider() {
         self.divider = UIView()
         self.divider.translatesAutoresizingMaskIntoConstraints = false
-        self.divider.backgroundColor = UIColor(white:0.8, alpha:1.0)
+        self.divider.backgroundColor = self.label.backgroundColor
         self.addSubview(self.divider)
         
         let views : [String:Any] = ["label" : self.label, "divider" : self.divider]
@@ -78,18 +78,7 @@ class SettingsPopover: UIView {
         // XXX width and height get defined by the buttons once created. do we need to specify a low priority default size for it?
     }
     
-    func removeButtons() {
-        for button in buttons {
-            button.removeFromSuperview()
-        }
-        buttons.removeAll()
-        // XXX we need to remove all the old constraints related to these buttons also
-    }
-    
     func reloadColors() {
-        
-        // remove the old buttons
-        removeButtons()
         
         guard let delegate = self.delegate else {
             return
@@ -97,18 +86,29 @@ class SettingsPopover: UIView {
         
         let numColors = delegate.numberOfColors(in:self)
         
-        // create a button for each color
+        if self.buttons.count != 0 && self.buttons.count != numColors {
+            fatalError("button count can not change")
+        }
+        
+        if self.buttons.count == 0 {
+            setupButtons(numButtons:numColors)
+        }
+        
         for index in 0..<numColors {
-            
             let color = delegate.settingsPopover(self, colorAt:index)
+            let button = self.buttons[index]
+            button.backgroundColor = color
+        }
+    }
+    
+    func setupButtons(numButtons:Int) {
+        
+        for _ in 0..<numButtons {            
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 8.0
-            button.backgroundColor = color
             buttons.append(button)
-            
             button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
-            
             buttonPanel.addSubview(button)
         }
         
