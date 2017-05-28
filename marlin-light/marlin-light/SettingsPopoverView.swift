@@ -19,9 +19,9 @@ protocol SettingsPopoverDelegate: class {
 
 class SettingsPopover: UIView {
     
-    var label : UILabel!
-    var divider : UIView!
+    var colorLabel : UILabel!
     var buttonPanel : UIView!
+    var brightnessLabel : UILabel!
     var slider : UISlider!
     var buttons : [UIButton]!
     weak var delegate : SettingsPopoverDelegate?
@@ -37,64 +37,69 @@ class SettingsPopover: UIView {
     }
     
     func commonInit() {
-        setupLabel()
-        setupDivider()
+        setupColorLabel()
         setupButtonPanel()
+        setupBrightnessLabel()
         setupSlider()
         self.buttons = []
+        
+        setupLayoutContraints()
     }
     
-    func setupLabel() {
-        self.label = UILabel()
-        self.label.translatesAutoresizingMaskIntoConstraints = false
-        self.label.text = "SELECT COLOR"
-        self.label.textColor = UIColor(white:0.8, alpha:1.0)
-        self.label.font = UIFont.boldSystemFont(ofSize:16)
-        self.addSubview(self.label)
-        
-        let views : [String:Any] = ["label" : self.label]
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-31-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-16-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-    }
-    
-    func setupDivider() {
-        self.divider = UIView()
-        self.divider.translatesAutoresizingMaskIntoConstraints = false
-        self.divider.backgroundColor = self.label.textColor
-        self.addSubview(self.divider)
-        
-        let views : [String:Any] = ["label" : self.label, "divider" : self.divider]
-        
-        // XXX remove hardcoded width
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-31-[divider(==158)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[label]-4-[divider(==2)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+    func setupColorLabel() {
+        self.colorLabel = UILabel()
+        self.colorLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.colorLabel.text = "COLOR"
+        self.colorLabel.textColor = UIColor(white:0.8, alpha:1.0)
+        self.colorLabel.font = UIFont.boldSystemFont(ofSize:16)
+        self.addSubview(self.colorLabel)
     }
     
     func setupButtonPanel() {
         self.buttonPanel = UIView()
         self.buttonPanel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonPanel)
-        
-        let views : [String:Any] = ["divider" : self.divider, "buttonPanel" : buttonPanel]
-        self.addConstraint(NSLayoutConstraint(item:self.buttonPanel, attribute:.left, relatedBy:.equal, toItem:self.divider, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[divider]-29-[buttonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        
-        // XXX width and height get defined by the buttons once created. do we need to specify a low priority default size for it?
+    }
+    
+    func setupBrightnessLabel() {
+        self.brightnessLabel = UILabel()
+        self.brightnessLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.brightnessLabel.text = "BRIGHTNESS"
+        self.brightnessLabel.textColor = UIColor(white:0.8, alpha:1.0)
+        self.brightnessLabel.font = UIFont.boldSystemFont(ofSize:16)
+        self.addSubview(self.brightnessLabel)
     }
     
     func setupSlider() {
         self.slider = UISlider()
         self.slider.translatesAutoresizingMaskIntoConstraints = false
         self.slider.minimumValue = 0.50
-        self.addSubview(slider)
-
+        self.addSubview(self.slider)
         self.slider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
-
-        let views : [String:Any] = ["slider" : self.slider, "buttonPanel" : self.buttonPanel]
+    }
+    
+    func setupLayoutContraints() {
         
-        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.left, relatedBy:.equal, toItem:self.divider, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.right, relatedBy:.equal, toItem:self.divider, attribute:.right, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel]-4-[slider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        let views : [String:Any] = ["colorLabel" : self.colorLabel, "buttonPanel" : self.buttonPanel, "brightnessLabel" : self.brightnessLabel, "slider" : self.slider]
+        
+        // color label
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        
+        // button panel
+        self.addConstraint(NSLayoutConstraint(item:self.buttonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[buttonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[buttonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        
+        // brightness label
+        self.addConstraint(NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        
+        // slider
+        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.right, relatedBy:.equal, toItem:self.buttonPanel, attribute:.right, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][slider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
     }
     
     func reloadColors() {
@@ -129,7 +134,7 @@ class SettingsPopover: UIView {
     
     func setupButtons(numButtons:Int) {
         
-        for _ in 0..<numButtons {            
+        for _ in 0..<numButtons {
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 8.0
@@ -215,7 +220,7 @@ class SettingsPopover: UIView {
         guard let delegate = self.delegate else {
             return
         }
-
+        
         let brightness = Int(slider.value * 100)
         
         delegate.settingsPopover(self, didSelectBrightness:brightness)
