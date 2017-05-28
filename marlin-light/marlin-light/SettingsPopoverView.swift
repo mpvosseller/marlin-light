@@ -11,8 +11,10 @@ import UIKit
 
 protocol SettingsPopoverDelegate: class {
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int
+    func brightness(in settingsPopover: SettingsPopover) -> Int
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int)
 }
 
 class SettingsPopover: UIView {
@@ -20,6 +22,7 @@ class SettingsPopover: UIView {
     var label : UILabel!
     var divider : UIView!
     var buttonPanel : UIView!
+    var slider : UISlider!
     var buttons : [UIButton]!
     weak var delegate : SettingsPopoverDelegate?
     
@@ -37,6 +40,7 @@ class SettingsPopover: UIView {
         setupLabel()
         setupDivider()
         setupButtonPanel()
+        setupSlider()
         self.buttons = []
     }
     
@@ -78,6 +82,21 @@ class SettingsPopover: UIView {
         // XXX width and height get defined by the buttons once created. do we need to specify a low priority default size for it?
     }
     
+    func setupSlider() {
+        self.slider = UISlider()
+        self.slider.translatesAutoresizingMaskIntoConstraints = false
+        self.slider.minimumValue = 0.50
+        self.addSubview(slider)
+
+        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
+
+        let views : [String:Any] = ["slider" : self.slider, "buttonPanel" : self.buttonPanel]
+        
+        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.left, relatedBy:.equal, toItem:self.divider, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.right, relatedBy:.equal, toItem:self.divider, attribute:.right, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel]-4-[slider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+    }
+    
     func reloadColors() {
         
         guard let delegate = self.delegate else {
@@ -98,6 +117,13 @@ class SettingsPopover: UIView {
             let color = delegate.settingsPopover(self, colorAt:index)
             let button = self.buttons[index]
             button.backgroundColor = color
+        }
+    }
+    
+    func reloadBrightness() {
+        if let delegate = self.delegate {
+            let brightness = delegate.brightness(in:self)
+            self.slider.value = Float(brightness) / 100.0
         }
     }
     
@@ -182,6 +208,17 @@ class SettingsPopover: UIView {
         if let index = self.buttons.index(of:button) {
             delegate.settingsPopover(self, didSelectIndex:index)
         }
+    }
+    
+    @objc func sliderValueChanaged(_ slider:UISlider) {
+        
+        guard let delegate = self.delegate else {
+            return
+        }
+
+        let brightness = Int(slider.value * 100)
+        
+        delegate.settingsPopover(self, didSelectBrightness:brightness)
     }
     
 }

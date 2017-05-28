@@ -67,6 +67,7 @@ class ViewController: UIViewController {
         self.view.addConstraint(NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:-6.0))
         
         popover.reloadColors()
+        popover.reloadBrightness()
         
         return popover
     }()
@@ -130,6 +131,10 @@ extension ViewController : SettingsPopoverDelegate {
         return self.colorPallett.numColors
     }
     
+    func brightness(in settingsPopover: SettingsPopover) -> Int {
+        return self.brightness
+    }
+    
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
         return self.colorPallett.colorAtIndex(index, brightness:self.brightness)
     }
@@ -137,5 +142,10 @@ extension ViewController : SettingsPopoverDelegate {
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
         selectColorAtIndex(index)
     }
+    
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int) {
+        selectBrightness(brightness)
+    }
+    
 }
 
