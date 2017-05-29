@@ -19,6 +19,10 @@ protocol SettingsPopoverDelegate: class {
 
 class SettingsPopover: UIView {
     
+    let labelCharacterSpacing = 1.0
+    let labelTextColor = UIColor(white:0.8, alpha:1.0)
+    let labelFont = UIFont.boldSystemFont(ofSize:16)
+    
     var colorLabel : UILabel!
     var buttonPanel : UIView!
     var brightnessLabel : UILabel!
@@ -49,9 +53,12 @@ class SettingsPopover: UIView {
     func setupColorLabel() {
         self.colorLabel = UILabel()
         self.colorLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.colorLabel.text = "COLOR"
-        self.colorLabel.textColor = UIColor(white:0.8, alpha:1.0)
-        self.colorLabel.font = UIFont.boldSystemFont(ofSize:16)
+        let text = "COLOR"
+        let attributedString = NSMutableAttributedString(string:text)
+        attributedString.addAttribute(NSKernAttributeName, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
+        self.colorLabel.attributedText = attributedString
+        self.colorLabel.textColor = labelTextColor
+        self.colorLabel.font = labelFont
         self.addSubview(self.colorLabel)
     }
     
@@ -64,9 +71,12 @@ class SettingsPopover: UIView {
     func setupBrightnessLabel() {
         self.brightnessLabel = UILabel()
         self.brightnessLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.brightnessLabel.text = "BRIGHTNESS"
-        self.brightnessLabel.textColor = UIColor(white:0.8, alpha:1.0)
-        self.brightnessLabel.font = UIFont.boldSystemFont(ofSize:16)
+        let text = "BRIGHTNESS"
+        let attributedString = NSMutableAttributedString(string:text)
+        attributedString.addAttribute(NSKernAttributeName, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
+        self.brightnessLabel.attributedText = attributedString
+        self.brightnessLabel.textColor = labelTextColor
+        self.brightnessLabel.font = labelFont
         self.addSubview(self.brightnessLabel)
     }
     
