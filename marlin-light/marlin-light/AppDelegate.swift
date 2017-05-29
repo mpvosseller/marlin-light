@@ -15,16 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         disableIdleTimer()
-        maximizeScreenBrightness()
         return true
     }
 
     func disableIdleTimer() {
         UIApplication.shared.isIdleTimerDisabled = true
-    }
-    
-    func maximizeScreenBrightness() {
-        UIScreen.main.brightness = 1.0
     }
 }
 
