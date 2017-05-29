@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  marlin-light
 //
 //  Created by Michael Vosseller on 5/22/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
         
     var settingsButton: UIButton?
     let colorPalett = ColorPalett()
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         settingsButton.setImage(cogImage, for: .normal)
         view.addSubview(settingsButton)
         settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
-        settingsButton.addTarget(self, action:#selector(ViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
+        settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
         
         // layout
         let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : settingsButton]
@@ -149,7 +149,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController : SettingsPopoverDelegate {
+extension MainViewController : SettingsPopoverDelegate {
     
     func numberOfColors(in settingsPopover: SettingsPopover) -> Int {
         return self.colorPalett.numColors
