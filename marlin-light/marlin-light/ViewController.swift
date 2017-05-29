@@ -10,15 +10,53 @@ import UIKit
 
 class ViewController: UIViewController {
         
-    @IBOutlet var settingsButton: UIButton?
-    
+    var settingsButton: UIButton?
     let colorPalett = ColorPalett()
     let settings = Settings()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        
+        let view = UIView()
+        
+        // label
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Marlin Light"
+        label.font = UIFont(name:"Zapfino", size:31.0)
+        let font = label.font
+        print(font!)
+        label.textColor = UIColor.black
+        label.alpha = 0.1
+        view.addSubview(label)
+        
+        // image
+        let imageView = UIImageView(image:UIImage(named:"marlin"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0.03
+        view.addSubview(imageView)
+        
+        // settings button
+        let settingsButton = UIButton(type: .system)
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        let cogImage = UIImage(named: "cog")
+        settingsButton.setImage(cogImage, for: .normal)
+        view.addSubview(settingsButton)
+        settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
+        settingsButton.addTarget(self, action:#selector(ViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
+        
+        // layout
+        let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : settingsButton]
+        
+        view.addConstraint(NSLayoutConstraint(item:label, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0))
+        view.addConstraint(NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-30-[label][imageView]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        
+        self.view = view
+        
         updateBackgroundColor()
-        self.settingsButton?.tintColor = UIColor(white: 0, alpha: 0.5)
     }
     
     lazy var settingsPopover : SettingsPopover = {
