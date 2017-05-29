@@ -1,5 +1,5 @@
 //
-//  ColorPallett.swift
+//  ColorPalett.swift
 //  marlin-light
 //
 //  Created by Michael Vosseller on 5/28/17.
