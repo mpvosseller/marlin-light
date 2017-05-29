@@ -9,43 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    static let hueKey = "hue"
-    static let saturationKey = "saturation"
-    static let brightnessKey = "brightness"
-    
+        
     @IBOutlet var settingsButton: UIButton?
     
     let colorPalett = ColorPalett()
-    var hue = 0
-    var saturation = 0
-    var brightness = 0
-   
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        loadHsb()
-    }
+    let settings = Settings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateBackgroundColor()
         self.settingsButton?.tintColor = UIColor(white: 0, alpha: 0.5)
-    }
-    
-    func loadHsb() {
-        let userDefaults = UserDefaults.standard
-        self.hue = userDefaults.value(forKey:ViewController.hueKey) as? Int ?? colorPalett.defaultHue
-        self.saturation = userDefaults.value(forKey:ViewController.saturationKey) as? Int ?? colorPalett.defaultSaturation
-        self.brightness = userDefaults.value(forKey:ViewController.brightnessKey) as? Int ?? colorPalett.defaultBrightness
-    }
-    
-    func saveHsb() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.setValue(self.hue, forKey:ViewController.hueKey)
-        userDefaults.setValue(self.saturation, forKey:ViewController.saturationKey)
-        userDefaults.setValue(self.brightness, forKey:ViewController.brightnessKey)
-        userDefaults.synchronize()
     }
     
     lazy var settingsPopover : SettingsPopover = {
@@ -115,24 +88,24 @@ class ViewController: UIViewController {
     }
     
     func selectColorAtIndex(_ index:Int) {
-        self.hue = self.colorPalett.hueAtIndex(index)
-        self.saturation = self.colorPalett.saturationAtIndex(index)
+        self.settings.hue = self.colorPalett.hueAtIndex(index)
+        self.settings.saturation = self.colorPalett.saturationAtIndex(index)
         updateBackgroundColor()
-        saveHsb()
+        self.settings.save()
     }
     
     func selectBrightness(_ brightness:Int, isStillAdjusting:Bool) {
-        self.brightness = brightness
+        self.settings.brightness = brightness
         updateBackgroundColor()
         self.settingsPopover.reloadColors()
 
         if (!isStillAdjusting) {
-            saveHsb()
+            self.settings.save()
         }
     }
     
     func updateBackgroundColor() {
-        let color = self.colorPalett.colorWithHue(self.hue, saturation: self.saturation, brightness: self.brightness)
+        let color = self.colorPalett.colorWithHue(self.settings.hue, saturation: self.settings.saturation, brightness: self.settings.brightness)
         self.view.backgroundColor = color
     }
     
@@ -145,11 +118,11 @@ extension ViewController : SettingsPopoverDelegate {
     }
     
     func brightness(in settingsPopover: SettingsPopover) -> Int {
-        return self.brightness
+        return self.settings.brightness
     }
     
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor {
-        return self.colorPalett.colorAtIndex(index, brightness:self.brightness)
+        return self.colorPalett.colorAtIndex(index, brightness:self.settings.brightness)
     }
     
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {

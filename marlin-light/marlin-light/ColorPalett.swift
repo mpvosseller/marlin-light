@@ -11,9 +11,9 @@ import UIKit
 
 class ColorPalett {
     
-    let defaultHue = 192
-    let defaultSaturation = 60
-    let defaultBrightness =  85
+    static let defaultHue = 192
+    static let defaultSaturation = 60
+    static let defaultBrightness =  85
     
     let maxHue = 360
     let maxSaturation = 100
@@ -39,7 +39,7 @@ class ColorPalett {
         for index in 0..<numColorsToAutoGenerate {
             let h = Int(hueStep * Double(index))
             hue.append(h)
-            saturation.append(defaultSaturation)
+            saturation.append(ColorPalett.defaultSaturation)
         }
         
         self.hue = hue
