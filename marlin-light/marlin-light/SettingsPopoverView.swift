@@ -14,7 +14,7 @@ protocol SettingsPopoverDelegate: class {
     func brightness(in settingsPopover: SettingsPopover) -> Int
     func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int)
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int, isStillAdjusting:Bool)
 }
 
 class SettingsPopover: UIView {
@@ -76,7 +76,10 @@ class SettingsPopover: UIView {
         self.slider.minimumValue = 0.50
         self.addSubview(self.slider)
         self.slider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
+        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
+        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
     }
+    
     
     func setupLayoutContraints() {
         
@@ -216,14 +219,24 @@ class SettingsPopover: UIView {
     }
     
     @objc func sliderValueChanaged(_ slider:UISlider) {
-        
+        sliderValueUpdated(slider, isStillAdjusting:true)
+    }
+    
+    @objc func sliderStopped(_ slider:UISlider) {
+        sliderValueUpdated(slider, isStillAdjusting:false)
+    }
+    
+    func sliderValueUpdated(_ slider:UISlider, isStillAdjusting:Bool) {
+
         guard let delegate = self.delegate else {
             return
         }
         
         let brightness = Int(slider.value * 100)
         
-        delegate.settingsPopover(self, didSelectBrightness:brightness)
+        delegate.settingsPopover(self, didSelectBrightness:brightness, isStillAdjusting:isStillAdjusting)
+        
     }
+    
     
 }

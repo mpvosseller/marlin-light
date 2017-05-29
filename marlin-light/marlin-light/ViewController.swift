@@ -121,11 +121,14 @@ class ViewController: UIViewController {
         saveHsb()
     }
     
-    func selectBrightness(_ brightness:Int) {
+    func selectBrightness(_ brightness:Int, isStillAdjusting:Bool) {
         self.brightness = brightness
         updateBackgroundColor()
         self.settingsPopover.reloadColors()
-        saveHsb()
+
+        if (!isStillAdjusting) {
+            saveHsb()
+        }
     }
     
     func updateBackgroundColor() {
@@ -153,8 +156,8 @@ extension ViewController : SettingsPopoverDelegate {
         selectColorAtIndex(index)
     }
     
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int) {
-        selectBrightness(brightness)
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int, isStillAdjusting:Bool) {
+        selectBrightness(brightness, isStillAdjusting:isStillAdjusting)
     }
     
 }
