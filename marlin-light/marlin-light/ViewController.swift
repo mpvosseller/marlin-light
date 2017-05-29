@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var settingsButton: UIButton?
     
-    let colorPallett = ColorPallett()
+    let colorPallett = ColorPalett()
     var hue = 0
     var saturation = 0
     var brightness = 0

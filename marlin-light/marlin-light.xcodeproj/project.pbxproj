@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B94ECBFB1ED4CC8C00C82535 /* SettingsPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */; };
-		B960FB841EDB12870044BF1C /* ColorPallett.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960FB831EDB12870044BF1C /* ColorPallett.swift */; };
+		B960FB841EDB12870044BF1C /* ColorPalett.swift in Sources */ = {isa = PBXBuildFile; fileRef = B960FB831EDB12870044BF1C /* ColorPalett.swift */; };
 		B9F954D61ED3BED7004D0238 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D51ED3BED7004D0238 /* AppDelegate.swift */; };
 		B9F954D81ED3BED7004D0238 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D71ED3BED7004D0238 /* ViewController.swift */; };
 		B9F954DB1ED3BED7004D0238 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9F954D91ED3BED7004D0238 /* Main.storyboard */; };
@@ -18,7 +18,7 @@
 
 /* Begin PBXFileReference section */
 		B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPopoverView.swift; sourceTree = "<group>"; };
-		B960FB831EDB12870044BF1C /* ColorPallett.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPallett.swift; sourceTree = "<group>"; };
+		B960FB831EDB12870044BF1C /* ColorPalett.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalett.swift; sourceTree = "<group>"; };
 		B9F954D21ED3BED7004D0238 /* marlin-light.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "marlin-light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F954D51ED3BED7004D0238 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9F954D71ED3BED7004D0238 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 				B9F954DC1ED3BED7004D0238 /* Assets.xcassets */,
 				B9F954D51ED3BED7004D0238 /* AppDelegate.swift */,
 				B9F954D71ED3BED7004D0238 /* ViewController.swift */,
-				B960FB831EDB12870044BF1C /* ColorPallett.swift */,
+				B960FB831EDB12870044BF1C /* ColorPalett.swift */,
 				B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */,
 				B9F954D91ED3BED7004D0238 /* Main.storyboard */,
 				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
@@ -145,7 +145,7 @@
 			files = (
 				B94ECBFB1ED4CC8C00C82535 /* SettingsPopoverView.swift in Sources */,
 				B9F954D81ED3BED7004D0238 /* ViewController.swift in Sources */,
-				B960FB841EDB12870044BF1C /* ColorPallett.swift in Sources */,
+				B960FB841EDB12870044BF1C /* ColorPalett.swift in Sources */,
 				B9F954D61ED3BED7004D0238 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

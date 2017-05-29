@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ColorPallett {
+class ColorPalett {
     
     // hue is an int between 0-360
     // saturation is an int between 0-100
