@@ -172,7 +172,7 @@ extension MainViewController : SettingsPopoverDelegate {
         return self.settings.brightness
     }
     
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int) {
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectColorIndex index: Int) {
         selectColorAtIndex(index)
     }
     
