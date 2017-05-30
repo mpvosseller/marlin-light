@@ -73,8 +73,8 @@ class MainViewController: UIViewController {
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: aspectRatio).isActive = true
         
         // settingsButton
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
     }
         
     lazy var settingsPopover : SettingsPopover = {
