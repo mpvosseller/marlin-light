@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
-        
+    
     var settingsButton: UIButton!
     let colorPalett = ColorPalett()
     let settings = Settings()
@@ -31,7 +31,8 @@ class MainViewController: UIViewController {
         view.addSubview(label)
         
         // imageView
-        let imageView = UIImageView(image:UIImage(named:"marlin"))
+        let image = UIImage(named:"marlin")!
+        let imageView = UIImageView(image:image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0.03
         view.addSubview(imageView)
@@ -57,7 +58,7 @@ class MainViewController: UIViewController {
         label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
 
-        // image
+        // imageView
         NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0).isActive = true
         NSLayoutConstraint(item:imageView, attribute:.top, relatedBy:.equal, toItem:label, attribute:.bottom, multiplier:1.0, constant:-20.0).isActive = true
         NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.lessThanOrEqual, toItem:view, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
@@ -66,12 +67,8 @@ class MainViewController: UIViewController {
         c.priority = UILayoutPriorityDefaultLow
         c.isActive = true
         
-        var aspectRatio: CGFloat = 1
-        if let image = imageView.image {
-            aspectRatio = image.size.width / image.size.height
-        }
-        let aspectRatioConstraint = imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: aspectRatio)
-        aspectRatioConstraint.isActive = true
+        let aspectRatio = image.size.width / image.size.height
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: aspectRatio).isActive = true
         
         // settingsButton
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
