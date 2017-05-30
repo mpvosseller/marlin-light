@@ -130,9 +130,7 @@ class SettingsPopover: UIView {
         self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
-        
-        // buttons
-        // layout the buttons and button panel
+        // colorButtons & colorButtonPanel
         let numColumns = 4
         var col = 0
         var row = 0
