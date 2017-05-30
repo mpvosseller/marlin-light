@@ -112,23 +112,23 @@ class SettingsPopover: UIView {
         let views : [String:Any] = ["colorLabel" : self.colorLabel, "colorButtonPanel" : self.colorButtonPanel, "brightnessLabel" : self.brightnessLabel, "brightnessSlider" : self.brightnessSlider]
         
         // colorLabel
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // colorButtonPanel
-        self.addConstraint(NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // brightnessLabel
-        self.addConstraint(NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // brightnessSlider
-        self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // colorButtons & colorButtonPanel
         let numColumns = 4
@@ -148,23 +148,23 @@ class SettingsPopover: UIView {
             }
             
             // size
-            b.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-            b.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+            NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+            NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             
             // x pos
             if col == 0 {
-                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else {
-                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             }
             
             // y pos
             if row == 0 {
-                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else if col == 0 {
-                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else {
-                colorButtonPanel.addConstraint(NSLayoutConstraint(item:b, attribute:.top, relatedBy:.equal, toItem:prevButton, attribute:.top, multiplier:1.0, constant:0.0))
+                NSLayoutConstraint(item:b, attribute:.top, relatedBy:.equal, toItem:prevButton, attribute:.top, multiplier:1.0, constant:0.0).isActive = true
             }
             
             if row == 0 {
@@ -182,12 +182,12 @@ class SettingsPopover: UIView {
         
         // right edge of button panel
         if let rightMostButton = lastInButtonFirstRow {
-            colorButtonPanel.addConstraint(NSLayoutConstraint(item:colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:rightMostButton, attribute:.right, multiplier:1.0, constant:0.0))
+            NSLayoutConstraint(item:colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:rightMostButton, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
         }
         
         // bottom edge of button panel
         if let bottomMostButton = prevButton {
-            colorButtonPanel.addConstraint(NSLayoutConstraint(item:colorButtonPanel, attribute:.bottom, relatedBy:.equal, toItem:bottomMostButton, attribute:.bottom, multiplier:1.0, constant:0.0))
+            NSLayoutConstraint(item:colorButtonPanel, attribute:.bottom, relatedBy:.equal, toItem:bottomMostButton, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
         }
     }
     
