@@ -12,7 +12,6 @@
 		B9D76F361EDCAC270008842B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D76F351EDCAC270008842B /* Settings.swift */; };
 		B9F954D61ED3BED7004D0238 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D51ED3BED7004D0238 /* AppDelegate.swift */; };
 		B9F954D81ED3BED7004D0238 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F954D71ED3BED7004D0238 /* MainViewController.swift */; };
-		B9F954DB1ED3BED7004D0238 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9F954D91ED3BED7004D0238 /* Main.storyboard */; };
 		B9F954DD1ED3BED7004D0238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9F954DC1ED3BED7004D0238 /* Assets.xcassets */; };
 		B9F954E01ED3BED7004D0238 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -24,7 +23,6 @@
 		B9F954D21ED3BED7004D0238 /* marlin-light.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "marlin-light.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9F954D51ED3BED7004D0238 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B9F954D71ED3BED7004D0238 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		B9F954DA1ED3BED7004D0238 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B9F954DC1ED3BED7004D0238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9F954DF1ED3BED7004D0238 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9F954E11ED3BED7004D0238 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 				B9F954D71ED3BED7004D0238 /* MainViewController.swift */,
 				B960FB831EDB12870044BF1C /* ColorPalett.swift */,
 				B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */,
-				B9F954D91ED3BED7004D0238 /* Main.storyboard */,
 				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
 			);
 			path = "marlin-light";
@@ -135,7 +132,6 @@
 			files = (
 				B9F954E01ED3BED7004D0238 /* LaunchScreen.storyboard in Resources */,
 				B9F954DD1ED3BED7004D0238 /* Assets.xcassets in Resources */,
-				B9F954DB1ED3BED7004D0238 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,14 +153,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B9F954D91ED3BED7004D0238 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B9F954DA1ED3BED7004D0238 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

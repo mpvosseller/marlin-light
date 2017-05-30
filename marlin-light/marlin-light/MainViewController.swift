@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
         
-    var settingsButton: UIButton?
+    var settingsButton: UIButton!
     let colorPalett = ColorPalett()
     let settings = Settings()
     
@@ -23,36 +23,59 @@ class MainViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Marlin Light"
         label.font = UIFont(name:"Zapfino", size:31.0)
-        let font = label.font
-        print(font!)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.25
         label.textColor = UIColor.black
         label.alpha = 0.1
+        label.textAlignment = .center
         view.addSubview(label)
         
-        // image
+        // imageView
         let imageView = UIImageView(image:UIImage(named:"marlin"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0.03
         view.addSubview(imageView)
         
-        // settings button
-        let settingsButton = UIButton(type: .system)
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        let cogImage = UIImage(named: "cog")
-        settingsButton.setImage(cogImage, for: .normal)
-        view.addSubview(settingsButton)
-        settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
-        settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
+        // settingsButton
+        self.settingsButton = UIButton(type: .system)
+        self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        self.settingsButton.setImage(UIImage(named: "cog"), for: .normal)
+        self.settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
+        self.settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
+        view.addSubview(self.settingsButton)
         
+        
+        //
         // layout
-        let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : settingsButton]
+        //
         
-        view.addConstraint(NSLayoutConstraint(item:label, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0))
-        view.addConstraint(NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0))
+        let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : self.settingsButton]
         
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-30-[label][imageView]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        // label
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-8-[label]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+
+        // image
+        NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint(item:imageView, attribute:.top, relatedBy:.equal, toItem:label, attribute:.bottom, multiplier:1.0, constant:-20.0).isActive = true
+        NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.lessThanOrEqual, toItem:view, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
+        
+        let c = NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.equal, toItem:view, attribute:.bottom, multiplier:1.0, constant:-10.0)
+        c.priority = UILayoutPriorityDefaultLow
+        c.isActive = true
+        
+        var aspectRatio: CGFloat = 1
+        if let image = imageView.image {
+            aspectRatio = image.size.width / image.size.height
+        }
+        let aspectRatioConstraint = imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: aspectRatio)
+        aspectRatioConstraint.isActive = true
+        
+        // settingsButton
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         self.view = view
         
