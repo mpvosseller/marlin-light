@@ -114,21 +114,23 @@ class SettingsPopover: UIView {
         let views : [String:Any] = ["colorLabel" : self.colorLabel, "colorButtonPanel" : self.colorButtonPanel, "brightnessLabel" : self.brightnessLabel, "brightnessSlider" : self.brightnessSlider]
         
         // colorLabel
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]-30-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // colorButtonPanel
         NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint(item:self.colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // brightnessLabel
         NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint(item:self.brightnessLabel, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // brightnessSlider
-        NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel]-1-[brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel]-1-[brightnessSlider]-18-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // colorButtons & colorButtonPanel
         let numColumns = 4

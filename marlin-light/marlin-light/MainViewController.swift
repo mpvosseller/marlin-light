@@ -83,11 +83,7 @@ class MainViewController: UIViewController {
         popover.layer.shadowOpacity = 0.4;
         
         self.view.addSubview(popover)
-        
-        // XXX remove hardcoded width and height
-        NSLayoutConstraint(item:popover, attribute:.width, relatedBy:.equal, toItem:nil, attribute:.notAnAttribute, multiplier:1.0, constant:218).isActive = true
-        NSLayoutConstraint(item:popover, attribute:.height, relatedBy:.equal, toItem:nil, attribute:.notAnAttribute, multiplier:1.0, constant:300).isActive = true
-        
+                
         // top
         NSLayoutConstraint(item:popover, attribute:.top, relatedBy:.greaterThanOrEqual, toItem:self.view, attribute:.top, multiplier:1.0, constant:6.0).isActive = true
         
