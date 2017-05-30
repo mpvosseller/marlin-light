@@ -79,8 +79,7 @@ class MainViewController: UIViewController {
         
     lazy var settingsPopover : SettingsPopover = {
         
-        let popover = SettingsPopover(colorPalette:self.colorPalette)
-        popover.delegate = self
+        let popover = SettingsPopover(delegate:self)
         popover.translatesAutoresizingMaskIntoConstraints = false
         popover.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         popover.alpha = 0.0
@@ -167,6 +166,10 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController : SettingsPopoverDelegate {
+    
+    func colorPalette(in settingsPopover: SettingsPopover) -> ColorPalette {
+        return self.colorPalette
+    }
     
     func brightness(in settingsPopover: SettingsPopover) -> Int {
         return self.settings.brightness

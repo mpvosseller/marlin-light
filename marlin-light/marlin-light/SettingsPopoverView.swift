@@ -11,6 +11,7 @@ import UIKit
 
 
 protocol SettingsPopoverDelegate: class {
+    func colorPalette(in settingsPopover: SettingsPopover) -> ColorPalette
     func brightness(in settingsPopover: SettingsPopover) -> Int
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectColorIndex index: Int)
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int, isStillAdjusting:Bool)
@@ -22,33 +23,30 @@ class SettingsPopover: UIView {
     let labelTextColor = UIColor(white:0.8, alpha:1.0)
     let labelFont = UIFont.boldSystemFont(ofSize:16)
     
-    var colorPalette : ColorPalette! = nil
-    
     var colorLabel : UILabel!
-    var buttonPanel : UIView!
+    var colorButtonPanel : UIView!
+    var colorButtons : [UIButton]!
     var brightnessLabel : UILabel!
-    var slider : UISlider!
-    var buttons : [UIButton]!
-    weak var delegate : SettingsPopoverDelegate?
+    var brightnessSlider : UISlider!
     
-    init(colorPalette:ColorPalette) {
-        self.colorPalette = colorPalette
-        super.init(frame: CGRect.zero)
+    weak var delegate : SettingsPopoverDelegate!
+    
+    init(delegate:SettingsPopoverDelegate) {
+        self.delegate = delegate
+        super.init(frame:CGRect.zero)
         commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
-        commonInit()
+        fatalError("method not supported")
     }
     
     func commonInit() {
         setupColorLabel()
-        setupButtonPanel()
+        setupColorButtonPanel()
+        self.colorButtons = []
         setupBrightnessLabel()
-        setupSlider()
-        self.buttons = []
-        
+        setupBrightnessSlider()
         setupLayoutContraints()
     }
     
@@ -64,10 +62,10 @@ class SettingsPopover: UIView {
         self.addSubview(self.colorLabel)
     }
     
-    func setupButtonPanel() {
-        self.buttonPanel = UIView()
-        self.buttonPanel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(buttonPanel)
+    func setupColorButtonPanel() {
+        self.colorButtonPanel = UIView()
+        self.colorButtonPanel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(colorButtonPanel)
     }
     
     func setupBrightnessLabel() {
@@ -82,62 +80,57 @@ class SettingsPopover: UIView {
         self.addSubview(self.brightnessLabel)
     }
     
-    func setupSlider() {
-        self.slider = UISlider()
-        self.slider.translatesAutoresizingMaskIntoConstraints = false
-        self.slider.minimumValue = 0.50
-        self.addSubview(self.slider)
-        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
-        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
-        self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
-        self.slider.tintColor = self.colorPalette.defaultColor()        
+    func setupBrightnessSlider() {
+        self.brightnessSlider = UISlider()
+        self.brightnessSlider.translatesAutoresizingMaskIntoConstraints = false
+        self.brightnessSlider.minimumValue = 0.50
+        self.brightnessSlider.tintColor = self.delegate.colorPalette(in:self).defaultColor()
+        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
+        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
+        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
+        self.addSubview(self.brightnessSlider)
     }
-    
     
     func setupLayoutContraints() {
         
-        let views : [String:Any] = ["colorLabel" : self.colorLabel, "buttonPanel" : self.buttonPanel, "brightnessLabel" : self.brightnessLabel, "slider" : self.slider]
+        let views : [String:Any] = ["colorLabel" : self.colorLabel, "colorButtonPanel" : self.colorButtonPanel, "brightnessLabel" : self.brightnessLabel, "brightnessSlider" : self.brightnessSlider]
         
-        // color label
+        // colorLabel
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
-        // button panel
-        self.addConstraint(NSLayoutConstraint(item:self.buttonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[buttonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[buttonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        // colorButtonPanel
+        self.addConstraint(NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
-        // brightness label
+        // brightnessLabel
         self.addConstraint(NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[buttonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
-        // slider
-        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0))
-        self.addConstraint(NSLayoutConstraint(item:self.slider, attribute:.right, relatedBy:.equal, toItem:self.buttonPanel, attribute:.right, multiplier:1.0, constant:0.0))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][slider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        // brightnessSlider
+        self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0))
+        self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0))
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
     }
     
     func reloadColors() {
         
-        guard let delegate = self.delegate else {
-            return
-        }
+        let numColors = self.delegate.colorPalette(in:self).numColors
         
-        let numColors = self.colorPalette.numColors
-        
-        if self.buttons.count != 0 && self.buttons.count != numColors {
+        if self.colorButtons.count != 0 && self.colorButtons.count != numColors {
             fatalError("button count can not change")
         }
         
-        if self.buttons.count == 0 {
+        if self.colorButtons.count == 0 {
             setupButtons(numButtons:numColors)
         }
         
         for index in 0..<numColors {
             let brightness = delegate.brightness(in:self)
-            let color = self.colorPalette.colorAtIndex(index, brightness: brightness)
-            let button = self.buttons[index]
+            let color = self.delegate.colorPalette(in:self).colorAtIndex(index, brightness: brightness)
+            let button = self.colorButtons[index]
             button.backgroundColor = color
         }
     }
@@ -145,7 +138,7 @@ class SettingsPopover: UIView {
     func reloadBrightness() {
         if let delegate = self.delegate {
             let brightness = delegate.brightness(in:self)
-            self.slider.value = Float(brightness) / 100.0
+            self.brightnessSlider.value = Float(brightness) / 100.0
         }
     }
     
@@ -155,9 +148,9 @@ class SettingsPopover: UIView {
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 8.0
-            buttons.append(button)
+            colorButtons.append(button)
             button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
-            buttonPanel.addSubview(button)
+            colorButtonPanel.addSubview(button)
         }
         
         // layout the buttons and button panel
@@ -167,7 +160,7 @@ class SettingsPopover: UIView {
         var prevButton : UIButton? = nil
         var lastInButtonFirstRow : UIButton? = nil
         
-        for b in self.buttons {
+        for b in self.colorButtons {
             
             let views : [String:Any]
             
@@ -183,18 +176,18 @@ class SettingsPopover: UIView {
             
             // x pos
             if col == 0 {
-                buttonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else {
-                buttonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             }
             
             // y pos
             if row == 0 {
-                buttonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else if col == 0 {
-                buttonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+                colorButtonPanel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
             } else {
-                buttonPanel.addConstraint(NSLayoutConstraint(item:b, attribute:.top, relatedBy:.equal, toItem:prevButton, attribute:.top, multiplier:1.0, constant:0.0))
+                colorButtonPanel.addConstraint(NSLayoutConstraint(item:b, attribute:.top, relatedBy:.equal, toItem:prevButton, attribute:.top, multiplier:1.0, constant:0.0))
             }
             
             if row == 0 {
@@ -212,12 +205,12 @@ class SettingsPopover: UIView {
         
         // right edge of button panel
         if let rightMostButton = lastInButtonFirstRow {
-            buttonPanel.addConstraint(NSLayoutConstraint(item:buttonPanel, attribute:.right, relatedBy:.equal, toItem:rightMostButton, attribute:.right, multiplier:1.0, constant:0.0))
+            colorButtonPanel.addConstraint(NSLayoutConstraint(item:colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:rightMostButton, attribute:.right, multiplier:1.0, constant:0.0))
         }
         
         // bottom edge of button panel
         if let bottomMostButton = prevButton {
-            buttonPanel.addConstraint(NSLayoutConstraint(item:buttonPanel, attribute:.bottom, relatedBy:.equal, toItem:bottomMostButton, attribute:.bottom, multiplier:1.0, constant:0.0))
+            colorButtonPanel.addConstraint(NSLayoutConstraint(item:colorButtonPanel, attribute:.bottom, relatedBy:.equal, toItem:bottomMostButton, attribute:.bottom, multiplier:1.0, constant:0.0))
         }
     }
     
@@ -227,7 +220,7 @@ class SettingsPopover: UIView {
             return
         }
         
-        if let index = self.buttons.index(of:button) {
+        if let index = self.colorButtons.index(of:button) {
             delegate.settingsPopover(self, didSelectColorIndex:index)
         }
     }
@@ -241,7 +234,7 @@ class SettingsPopover: UIView {
     }
     
     func sliderValueUpdated(_ slider:UISlider, isStillAdjusting:Bool) {
-
+        
         guard let delegate = self.delegate else {
             return
         }
