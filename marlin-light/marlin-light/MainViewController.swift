@@ -16,9 +16,13 @@ class MainViewController: UIViewController {
     
     override func loadView() {
         
-        let view = UIView()
+        //
+        // create views
+        //
         
-        // label
+        self.view = UIView()
+        updateBackgroundColor()
+
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Marlin Light"
@@ -30,14 +34,12 @@ class MainViewController: UIViewController {
         label.textAlignment = .center
         view.addSubview(label)
         
-        // imageView
         let image = UIImage(named:"marlin")!
         let imageView = UIImageView(image:image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0.03
         view.addSubview(imageView)
         
-        // settingsButton
         self.settingsButton = UIButton(type: .system)
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
         self.settingsButton.setImage(UIImage(named: "cog"), for: .normal)
@@ -47,7 +49,7 @@ class MainViewController: UIViewController {
         
         
         //
-        // layout
+        // layout views
         //
         
         let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : self.settingsButton]
@@ -73,12 +75,8 @@ class MainViewController: UIViewController {
         // settingsButton
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        
-        self.view = view
-        
-        updateBackgroundColor()
     }
-    
+        
     lazy var settingsPopover : SettingsPopover = {
         let popover = SettingsPopover()
         popover.delegate = self
