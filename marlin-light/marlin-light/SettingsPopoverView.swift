@@ -12,7 +12,7 @@ import UIKit
 
 protocol SettingsPopoverDelegate: class {
     func brightness(in settingsPopover: SettingsPopover) -> Int
-    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
+    func settingsPopover(_ settingsPopover: SettingsPopover, didSelectColorIndex index: Int)
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int, isStillAdjusting:Bool)
 }
 
@@ -228,7 +228,7 @@ class SettingsPopover: UIView {
         }
         
         if let index = self.buttons.index(of:button) {
-            delegate.settingsPopover(self, didSelectIndex:index)
+            delegate.settingsPopover(self, didSelectColorIndex:index)
         }
     }
     
