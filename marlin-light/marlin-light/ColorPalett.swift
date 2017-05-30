@@ -6,7 +6,6 @@
 //  Copyright © 2017 MPV Software, LLC. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class ColorPalett {
