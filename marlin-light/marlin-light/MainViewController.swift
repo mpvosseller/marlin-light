@@ -98,12 +98,12 @@ class MainViewController: UIViewController {
         NSLayoutConstraint(item:popover, attribute:.top, relatedBy:.greaterThanOrEqual, toItem:self.view, attribute:.top, multiplier:1.0, constant:6.0).isActive = true
         
         // bottom
-        var bottomConstraint = NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:-6.0)
+        var bottomConstraint = NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:10.0)
         bottomConstraint.priority = UILayoutPriorityDefaultLow
         bottomConstraint.isActive = true
 
         // right
-        NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:-6.0).isActive = true
+        NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:10.0).isActive = true
         
         popover.reloadColors()
         popover.reloadBrightness()
