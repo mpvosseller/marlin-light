@@ -15,9 +15,9 @@ class ColorPalett {
     static let defaultSaturation = 60
     static let defaultBrightness =  85
     
-    let maxHue = 360
-    let maxSaturation = 100
-    let maxBrightness = 100
+    static let maxHue = 360
+    static let maxSaturation = 100
+    static let maxBrightness = 100
     
     let numColors = 16
     let hue : [Int]
@@ -34,7 +34,7 @@ class ColorPalett {
         
         // autogenerate and add the rest of the colors
         let numColorsToAutoGenerate = numColors - hue.count
-        let hueStep = Double(maxHue) / Double(numColorsToAutoGenerate)
+        let hueStep = Double(ColorPalett.maxHue) / Double(numColorsToAutoGenerate)
         
         for index in 0..<numColorsToAutoGenerate {
             let h = Int(hueStep * Double(index))
@@ -61,9 +61,9 @@ class ColorPalett {
     }
     
     func colorWithHue(_ hue:Int, saturation:Int, brightness:Int) -> UIColor {
-        let hueFloat = CGFloat(hue) / CGFloat(maxHue)
-        let saturationFloat = CGFloat(saturation) / CGFloat(maxSaturation)
-        let brightnessFloat = CGFloat(brightness) / CGFloat(maxBrightness)
+        let hueFloat = CGFloat(hue) / CGFloat(ColorPalett.maxHue)
+        let saturationFloat = CGFloat(saturation) / CGFloat(ColorPalett.maxSaturation)
+        let brightnessFloat = CGFloat(brightness) / CGFloat(ColorPalett.maxBrightness)
         let alphaFloat = CGFloat(1.0)
         return UIColor(hue:hueFloat, saturation:saturationFloat, brightness:brightnessFloat, alpha:alphaFloat)
     }
