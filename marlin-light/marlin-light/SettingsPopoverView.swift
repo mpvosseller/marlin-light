@@ -209,9 +209,8 @@ class SettingsPopover: UIView {
     }
     
     @objc func colorButtonPressed(_ button:UIButton) {
-        if let index = self.colorButtons.index(of:button) {
-            delegate.settingsPopover(self, didSelectColorIndex:index)
-        }
+        let index = self.colorButtons.index(of:button)!
+        delegate.settingsPopover(self, didSelectColorIndex:index)
     }
     
     @objc func sliderValueChanaged(_ slider:UISlider) {
