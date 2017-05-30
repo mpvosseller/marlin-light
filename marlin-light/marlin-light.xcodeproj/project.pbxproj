@@ -60,12 +60,12 @@
 			children = (
 				B9F954E11ED3BED7004D0238 /* Info.plist */,
 				B9F954DC1ED3BED7004D0238 /* Assets.xcassets */,
+				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
 				B9F954D51ED3BED7004D0238 /* AppDelegate.swift */,
 				B9D76F351EDCAC270008842B /* Settings.swift */,
-				B9F954D71ED3BED7004D0238 /* MainViewController.swift */,
 				B960FB831EDB12870044BF1C /* ColorPalett.swift */,
+				B9F954D71ED3BED7004D0238 /* MainViewController.swift */,
 				B94ECBFA1ED4CC8C00C82535 /* SettingsPopoverView.swift */,
-				B9F954DE1ED3BED7004D0238 /* LaunchScreen.storyboard */,
 			);
 			path = "marlin-light";
 			sourceTree = "<group>";
