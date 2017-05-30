@@ -14,12 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        setupWindowAndViewController()
+        setupWindowAndRootViewController()
         disableIdleTimer()
         return true
     }
     
-    func setupWindowAndViewController() {
+    func setupWindowAndRootViewController() {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.rootViewController = MainViewController()
         self.window!.makeKeyAndVisible()
