@@ -19,9 +19,9 @@ protocol SettingsPopoverDelegate: class {
 
 class SettingsPopover: UIView {
     
-    let labelCharacterSpacing = 1.0
+    let labelCharacterSpacing = 1.2
     let labelTextColor = UIColor(white:0.8, alpha:1.0)
-    let labelFont = UIFont.boldSystemFont(ofSize:16)
+    let labelFont = UIFont(name:".SFUIDisplay-Bold", size:16)
     
     var colorLabel : UILabel!
     var colorButtonPanel : UIView!
