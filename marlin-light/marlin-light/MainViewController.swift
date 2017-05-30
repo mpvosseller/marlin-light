@@ -105,8 +105,8 @@ class MainViewController: UIViewController {
         // right
         NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:10.0).isActive = true
         
-        popover.reloadColors()
-        popover.reloadBrightness()
+        popover.refreshButtonColors()
+        popover.refreshBrightness()
         
         return popover
     }()
@@ -151,7 +151,7 @@ class MainViewController: UIViewController {
     func selectBrightness(_ brightness:Int, isStillAdjusting:Bool) {
         self.settings.brightness = brightness
         updateBackgroundColor()
-        self.settingsPopover.reloadColors()
+        self.settingsPopover.refreshButtonColors()
 
         if (!isStillAdjusting) {
             self.settings.save()

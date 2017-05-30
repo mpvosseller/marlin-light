@@ -44,7 +44,7 @@ class SettingsPopover: UIView {
     func commonInit() {
         setupColorLabel()
         setupColorButtonPanel()
-        self.colorButtons = []
+        setupColorButtons()
         setupBrightnessLabel()
         setupBrightnessSlider()
         setupLayoutContraints()
@@ -66,6 +66,22 @@ class SettingsPopover: UIView {
         self.colorButtonPanel = UIView()
         self.colorButtonPanel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorButtonPanel)
+    }
+    
+    func setupColorButtons() {
+        
+        self.colorButtons = []
+        
+        let numButtons = self.delegate.colorPalette(in:self).numColors
+        
+        for _ in 0..<numButtons {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.layer.cornerRadius = 8.0
+            colorButtons.append(button)
+            button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
+            colorButtonPanel.addSubview(button)
+        }
     }
     
     func setupBrightnessLabel() {
@@ -113,46 +129,9 @@ class SettingsPopover: UIView {
         self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.brightnessLabel, attribute:.left, multiplier:1.0, constant:0.0))
         self.addConstraint(NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorButtonPanel, attribute:.right, multiplier:1.0, constant:0.0))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel][brightnessSlider]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-    }
-    
-    func reloadColors() {
         
-        let numColors = self.delegate.colorPalette(in:self).numColors
         
-        if self.colorButtons.count != 0 && self.colorButtons.count != numColors {
-            fatalError("button count can not change")
-        }
-        
-        if self.colorButtons.count == 0 {
-            setupButtons(numButtons:numColors)
-        }
-        
-        for index in 0..<numColors {
-            let brightness = delegate.brightness(in:self)
-            let color = self.delegate.colorPalette(in:self).colorAtIndex(index, brightness: brightness)
-            let button = self.colorButtons[index]
-            button.backgroundColor = color
-        }
-    }
-    
-    func reloadBrightness() {
-        if let delegate = self.delegate {
-            let brightness = delegate.brightness(in:self)
-            self.brightnessSlider.value = Float(brightness) / 100.0
-        }
-    }
-    
-    func setupButtons(numButtons:Int) {
-        
-        for _ in 0..<numButtons {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.layer.cornerRadius = 8.0
-            colorButtons.append(button)
-            button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
-            colorButtonPanel.addSubview(button)
-        }
-        
+        // buttons
         // layout the buttons and button panel
         let numColumns = 4
         var col = 0
@@ -214,36 +193,39 @@ class SettingsPopover: UIView {
         }
     }
     
-    @objc func colorButtonPressed(_ button:UIButton) {
+    func refreshButtonColors() {
         
-        guard let delegate = self.delegate else {
-            return
+        let numColors = self.colorButtons.count
+        
+        for index in 0..<numColors {
+            let button = self.colorButtons[index]
+            let brightness = delegate.brightness(in:self)
+            let color = self.delegate.colorPalette(in:self).colorAtIndex(index, brightness: brightness)
+            button.backgroundColor = color
         }
-        
+    }
+    
+    func refreshBrightness() {
+        let brightness = delegate.brightness(in:self)
+        self.brightnessSlider.value = Float(brightness) / 100.0
+    }
+    
+    @objc func colorButtonPressed(_ button:UIButton) {
         if let index = self.colorButtons.index(of:button) {
             delegate.settingsPopover(self, didSelectColorIndex:index)
         }
     }
     
     @objc func sliderValueChanaged(_ slider:UISlider) {
-        sliderValueUpdated(slider, isStillAdjusting:true)
+        sliderValueDidUpdate(slider, isStillAdjusting:true)
     }
     
     @objc func sliderStopped(_ slider:UISlider) {
-        sliderValueUpdated(slider, isStillAdjusting:false)
+        sliderValueDidUpdate(slider, isStillAdjusting:false)
     }
     
-    func sliderValueUpdated(_ slider:UISlider, isStillAdjusting:Bool) {
-        
-        guard let delegate = self.delegate else {
-            return
-        }
-        
+    func sliderValueDidUpdate(_ slider:UISlider, isStillAdjusting:Bool) {
         let brightness = Int(slider.value * 100)
-        
         delegate.settingsPopover(self, didSelectBrightness:brightness, isStillAdjusting:isStillAdjusting)
-        
     }
-    
-    
 }
