@@ -67,4 +67,8 @@ class ColorPalett {
         return UIColor(hue:hueFloat, saturation:saturationFloat, brightness:brightnessFloat, alpha:alphaFloat)
     }
     
+    func defaultColor() -> UIColor {
+        return colorWithHue(ColorPalett.defaultHue, saturation:ColorPalett.defaultSaturation, brightness:ColorPalett.defaultBrightness)
+    }
+    
 }
