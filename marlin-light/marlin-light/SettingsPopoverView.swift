@@ -9,10 +9,9 @@
 import Foundation
 import UIKit
 
+
 protocol SettingsPopoverDelegate: class {
-    func numberOfColors(in settingsPopover: SettingsPopover) -> Int
     func brightness(in settingsPopover: SettingsPopover) -> Int
-    func settingsPopover(_ settingsPopover: SettingsPopover, colorAt index: Int) -> UIColor
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectIndex index: Int)
     func settingsPopover(_ settingsPopover: SettingsPopover, didSelectBrightness brightness: Int, isStillAdjusting:Bool)
 }
@@ -23,6 +22,8 @@ class SettingsPopover: UIView {
     let labelTextColor = UIColor(white:0.8, alpha:1.0)
     let labelFont = UIFont.boldSystemFont(ofSize:16)
     
+    var colorPalette : ColorPalett! = nil
+    
     var colorLabel : UILabel!
     var buttonPanel : UIView!
     var brightnessLabel : UILabel!
@@ -30,8 +31,9 @@ class SettingsPopover: UIView {
     var buttons : [UIButton]!
     weak var delegate : SettingsPopoverDelegate?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(colorPalette:ColorPalett) {
+        self.colorPalette = colorPalette
+        super.init(frame: CGRect.zero)
         commonInit()
     }
     
@@ -88,6 +90,7 @@ class SettingsPopover: UIView {
         self.slider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
         self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
         self.slider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
+        self.slider.tintColor = self.colorPalette.defaultColor()        
     }
     
     
@@ -121,7 +124,7 @@ class SettingsPopover: UIView {
             return
         }
         
-        let numColors = delegate.numberOfColors(in:self)
+        let numColors = self.colorPalette.numColors
         
         if self.buttons.count != 0 && self.buttons.count != numColors {
             fatalError("button count can not change")
@@ -132,7 +135,8 @@ class SettingsPopover: UIView {
         }
         
         for index in 0..<numColors {
-            let color = delegate.settingsPopover(self, colorAt:index)
+            let brightness = delegate.brightness(in:self)
+            let color = self.colorPalette.colorAtIndex(index, brightness: brightness)
             let button = self.buttons[index]
             button.backgroundColor = color
         }
