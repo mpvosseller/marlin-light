@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsPopoverView.swift
 //  marlin-light
 //
 //  Created by Michael Vosseller on 5/23/17.
