@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 protocol SettingsPopoverDelegate: class {
     func colorPalette(in settingsPopover: SettingsPopover) -> ColorPalette
     func brightness(in settingsPopover: SettingsPopover) -> Int
@@ -118,8 +117,6 @@ class SettingsPopover: UIView {
         // colorButtonPanel
         NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel(>=0)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         
         // brightnessLabel
         NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
