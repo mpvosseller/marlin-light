@@ -22,7 +22,7 @@ class SettingsPopover: UIView {
     let labelTextColor = UIColor(white:0.8, alpha:1.0)
     let labelFont = UIFont.boldSystemFont(ofSize:16)
     
-    var colorPalette : ColorPalett! = nil
+    var colorPalette : ColorPalette! = nil
     
     var colorLabel : UILabel!
     var buttonPanel : UIView!
@@ -31,7 +31,7 @@ class SettingsPopover: UIView {
     var buttons : [UIButton]!
     weak var delegate : SettingsPopoverDelegate?
     
-    init(colorPalette:ColorPalett) {
+    init(colorPalette:ColorPalette) {
         self.colorPalette = colorPalette
         super.init(frame: CGRect.zero)
         commonInit()

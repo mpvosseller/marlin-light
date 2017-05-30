@@ -11,7 +11,7 @@ import UIKit
 class MainViewController: UIViewController {
     
     var settingsButton: UIButton!
-    let colorPalett = ColorPalett()
+    let colorPalette = ColorPalette()
     let settings = Settings()
     
     override func loadView() {
@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
         
     lazy var settingsPopover : SettingsPopover = {
         
-        let popover = SettingsPopover(colorPalette:self.colorPalett)
+        let popover = SettingsPopover(colorPalette:self.colorPalette)
         popover.delegate = self
         popover.translatesAutoresizingMaskIntoConstraints = false
         popover.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -143,8 +143,8 @@ class MainViewController: UIViewController {
     }
     
     func selectColorAtIndex(_ index:Int) {
-        self.settings.hue = self.colorPalett.hueAtIndex(index)
-        self.settings.saturation = self.colorPalett.saturationAtIndex(index)
+        self.settings.hue = self.colorPalette.hueAtIndex(index)
+        self.settings.saturation = self.colorPalette.saturationAtIndex(index)
         updateBackgroundColor()
         self.settings.save()
     }
@@ -160,7 +160,7 @@ class MainViewController: UIViewController {
     }
     
     func updateBackgroundColor() {
-        let color = self.colorPalett.colorWithHue(self.settings.hue, saturation: self.settings.saturation, brightness: self.settings.brightness)
+        let color = self.colorPalette.colorWithHue(self.settings.hue, saturation: self.settings.saturation, brightness: self.settings.brightness)
         self.view.backgroundColor = color
     }
     

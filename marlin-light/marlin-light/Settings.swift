@@ -24,9 +24,9 @@ class Settings {
     
     func load() {
         let userDefaults = UserDefaults.standard
-        self.hue = userDefaults.value(forKey:Settings.hueKey) as? Int ?? ColorPalett.defaultHue
-        self.saturation = userDefaults.value(forKey:Settings.saturationKey) as? Int ?? ColorPalett.defaultSaturation
-        self.brightness = userDefaults.value(forKey:Settings.brightnessKey) as? Int ?? ColorPalett.defaultBrightness
+        self.hue = userDefaults.value(forKey:Settings.hueKey) as? Int ?? ColorPalette.defaultHue
+        self.saturation = userDefaults.value(forKey:Settings.saturationKey) as? Int ?? ColorPalette.defaultSaturation
+        self.brightness = userDefaults.value(forKey:Settings.brightnessKey) as? Int ?? ColorPalette.defaultBrightness
     }
     
     func save() {
