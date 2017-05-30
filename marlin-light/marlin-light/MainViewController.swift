@@ -98,10 +98,7 @@ class MainViewController: UIViewController {
 
         // right
         NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:10.0).isActive = true
-        
-        popover.refreshButtonColors()
-        popover.refreshBrightness()
-        
+            
         return popover
     }()
     

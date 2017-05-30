@@ -47,6 +47,9 @@ class SettingsPopover: UIView {
         setupBrightnessLabel()
         setupBrightnessSlider()
         setupLayoutContraints()
+        
+        refreshButtonColors()
+        refreshBrightness()
     }
     
     func setupColorLabel() {
