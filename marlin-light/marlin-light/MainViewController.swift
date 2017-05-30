@@ -16,10 +16,7 @@ class MainViewController: UIViewController {
     
     override func loadView() {
         
-        //
         // create views
-        //
-        
         self.view = UIView()
         updateBackgroundColor()
 
@@ -48,21 +45,18 @@ class MainViewController: UIViewController {
         view.addSubview(self.settingsButton)
         
         
-        //
         // layout views
-        //
-        
         let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : self.settingsButton]
         
         // label
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-8-[label]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-41-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
         label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
 
         // imageView
         NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:imageView, attribute:.top, relatedBy:.equal, toItem:label, attribute:.bottom, multiplier:1.0, constant:-20.0).isActive = true
+        NSLayoutConstraint(item:imageView, attribute:.top, relatedBy:.equal, toItem:label, attribute:.bottom, multiplier:1.0, constant:-4.0).isActive = true
         NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.lessThanOrEqual, toItem:view, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
         
         let c = NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.equal, toItem:view, attribute:.bottom, multiplier:1.0, constant:-10.0)
