@@ -126,10 +126,8 @@ class MainViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if viewForTouches(touches, with:event) == self.view {
-            if isSettingsPopoverVisible() {
-                setSettingsPopoverVisible(false)
-            }
+        if viewForTouches(touches, with:event) == self.view && isSettingsPopoverVisible() {
+            setSettingsPopoverVisible(false)
         }
     }
     
