@@ -108,24 +108,24 @@ class SettingsPopover: UIView {
     
     func setupLayoutContraints() {
         
-        setupColorButtonGridLayout()
+        setupColorButtonGridLayoutContraints()
         
         self.verticalStackView = UIStackView(arrangedSubviews: [self.colorLabel, self.colorButtonGrid, self.brightnessLabel, self.brightnessSlider])
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .leading
-        verticalStackView.spacing = 10
-        self.addSubview(verticalStackView)
+        self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.verticalStackView.axis = .vertical
+        self.verticalStackView.alignment = .leading
+        self.verticalStackView.spacing = 10
+        self.addSubview(self.verticalStackView)
         
-        verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:16.0).isActive = true
-        verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-16.0).isActive = true
-        verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:16.0).isActive = true
-        verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-16.0).isActive = true
+        self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:16.0).isActive = true
+        self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-16.0).isActive = true
+        self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:16.0).isActive = true
+        self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-16.0).isActive = true
 
-        self.brightnessSlider.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor).isActive = true
+        self.brightnessSlider.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor).isActive = true
     }
 
-    func setupColorButtonGridLayout() {
+    func setupColorButtonGridLayoutContraints() {
         
         self.colorButtonGrid = UIStackView()
         self.colorButtonGrid.translatesAutoresizingMaskIntoConstraints = false
@@ -140,10 +140,9 @@ class SettingsPopover: UIView {
             
             if rowStackView == nil {
                 rowStackView = UIStackView()
-                rowStackView?.translatesAutoresizingMaskIntoConstraints = false
+                rowStackView!.translatesAutoresizingMaskIntoConstraints = false
                 rowStackView!.axis = .horizontal
                 rowStackView!.spacing = 10
-                
                 self.colorButtonGrid.addArrangedSubview(rowStackView!)
             }
             
