@@ -72,7 +72,7 @@ class MainViewController: UIViewController {
         bottomConstraint.priority = UILayoutPriorityDefaultLow
         bottomConstraint.isActive = true
         popover.trailingAnchor.constraint(equalTo:self.settingsButton.leadingAnchor, constant:10.0).isActive = true
-        popover.topAnchor.constraint(greaterThanOrEqualTo:self.topLayoutGuide.bottomAnchor, constant:6.0).isActive = true
+        popover.topAnchor.constraint(greaterThanOrEqualTo:self.topLayoutGuide.bottomAnchor, constant:2.0).isActive = true
         
         return popover
     }()

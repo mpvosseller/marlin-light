@@ -133,7 +133,7 @@ class SettingsPopover: UIView {
         self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:30.0).isActive = true
         self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-30.0).isActive = true
         self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:21.0).isActive = true
-        self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-33.0).isActive = true
+        self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-30.0).isActive = true
 
         self.brightnessSlider.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor).isActive = true
     }
