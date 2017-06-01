@@ -74,17 +74,13 @@ class MainViewController: UIViewController {
         
         self.view.addSubview(popover)
                 
-        // top
-        NSLayoutConstraint(item:popover, attribute:.top, relatedBy:.greaterThanOrEqual, toItem:self.view, attribute:.top, multiplier:1.0, constant:6.0).isActive = true
-        
-        // bottom
-        var bottomConstraint = NSLayoutConstraint(item:popover, attribute:.bottom, relatedBy:.equal, toItem:self.settingsButton, attribute:.top, multiplier:1.0, constant:10.0)
+        let bottomConstraint = popover.bottomAnchor.constraint(equalTo: self.settingsButton.topAnchor, constant:10)
         bottomConstraint.priority = UILayoutPriorityDefaultLow
         bottomConstraint.isActive = true
 
-        // right
-        NSLayoutConstraint(item:popover, attribute:.right, relatedBy:.equal, toItem:self.settingsButton, attribute:.left, multiplier:1.0, constant:10.0).isActive = true
-            
+        popover.trailingAnchor.constraint(equalTo:self.settingsButton.leadingAnchor, constant:10.0).isActive = true
+        popover.topAnchor.constraint(greaterThanOrEqualTo:self.topLayoutGuide.bottomAnchor, constant:6.0).isActive = true
+        
         return popover
     }()
     
