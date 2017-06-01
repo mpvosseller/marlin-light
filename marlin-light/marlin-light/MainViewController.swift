@@ -69,8 +69,8 @@ class MainViewController: UIViewController {
         popover.alpha = 0.0
         popover.layer.cornerRadius = 10
         popover.layer.shadowOffset = CGSize(width:2, height:2)
-        popover.layer.shadowRadius = 4;
-        popover.layer.shadowOpacity = 0.4;
+        popover.layer.shadowRadius = 4
+        popover.layer.shadowOpacity = 0.4
         
         self.view.addSubview(popover)
                 
