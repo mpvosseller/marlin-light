@@ -110,17 +110,30 @@ class SettingsPopover: UIView {
         
         setupColorButtonGridLayoutContraints()
         
-        self.verticalStackView = UIStackView(arrangedSubviews: [self.colorLabel, self.colorButtonGrid, self.brightnessLabel, self.brightnessSlider])
+        // add some variable spacing
+        let spacer1 = UIView()
+        spacer1.translatesAutoresizingMaskIntoConstraints = false
+        spacer1.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
+        let spacer2 = UIView()
+        spacer2.translatesAutoresizingMaskIntoConstraints = false
+        spacer2.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        let spacer3 = UIView()
+        spacer3.translatesAutoresizingMaskIntoConstraints = false
+        spacer3.heightAnchor.constraint(equalToConstant: 4).isActive = true
+        
+        self.verticalStackView = UIStackView(arrangedSubviews: [self.colorLabel, spacer1, self.colorButtonGrid, spacer2, self.brightnessLabel, spacer3, self.brightnessSlider])
         self.verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         self.verticalStackView.axis = .vertical
         self.verticalStackView.alignment = .leading
-        self.verticalStackView.spacing = 10
+        self.verticalStackView.spacing = 0
         self.addSubview(self.verticalStackView)
         
-        self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:16.0).isActive = true
-        self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-16.0).isActive = true
-        self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:16.0).isActive = true
-        self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-16.0).isActive = true
+        self.verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:30.0).isActive = true
+        self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-30.0).isActive = true
+        self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:21.0).isActive = true
+        self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-33.0).isActive = true
 
         self.brightnessSlider.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor).isActive = true
     }
