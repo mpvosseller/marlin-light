@@ -71,13 +71,12 @@ class MainViewController: UIViewController {
         popover.layer.shadowOffset = CGSize(width:2, height:2)
         popover.layer.shadowRadius = 4
         popover.layer.shadowOpacity = 0.4
-        
         self.view.addSubview(popover)
-                
+        
+        // layout views
         let bottomConstraint = popover.bottomAnchor.constraint(equalTo: self.settingsButton.topAnchor, constant:10)
         bottomConstraint.priority = UILayoutPriorityDefaultLow
         bottomConstraint.isActive = true
-
         popover.trailingAnchor.constraint(equalTo:self.settingsButton.leadingAnchor, constant:10.0).isActive = true
         popover.topAnchor.constraint(greaterThanOrEqualTo:self.topLayoutGuide.bottomAnchor, constant:6.0).isActive = true
         
