@@ -16,7 +16,6 @@ class MainViewController: UIViewController {
     
     override func loadView() {
         
-        // create views
         self.view = UIView()
         updateBackgroundColor()
 
