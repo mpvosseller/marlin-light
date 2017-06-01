@@ -92,7 +92,7 @@ class MainViewController: UIViewController {
         })
     }
     
-    @IBAction func handleSettingsButtonPressed(_ sender: Any) {
+    func handleSettingsButtonPressed(_ sender: Any) {
         setSettingsPopoverVisible(!isSettingsPopoverVisible())
     }
     
