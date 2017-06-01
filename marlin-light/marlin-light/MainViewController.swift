@@ -64,12 +64,7 @@ class MainViewController: UIViewController {
         
         let popover = SettingsPopover(delegate:self)
         popover.translatesAutoresizingMaskIntoConstraints = false
-        popover.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         popover.alpha = 0.0
-        popover.layer.cornerRadius = 10
-        popover.layer.shadowOffset = CGSize(width:2, height:2)
-        popover.layer.shadowRadius = 4
-        popover.layer.shadowOpacity = 0.4
         self.view.addSubview(popover)
         
         // layout views

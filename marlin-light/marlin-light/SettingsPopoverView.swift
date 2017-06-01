@@ -23,10 +23,12 @@ class SettingsPopover: UIView {
     let labelFont = UIFont(name:".SFUIDisplay-Bold", size:16)
     
     var colorLabel : UILabel!
-    var colorButtonPanel : UIView!
     var colorButtons : [UIButton]!
     var brightnessLabel : UILabel!
     var brightnessSlider : UISlider!
+    
+    var verticalStackView : UIStackView!
+    var colorButtonGrid : UIStackView!
     
     weak var delegate : SettingsPopoverDelegate!
     
@@ -41,8 +43,14 @@ class SettingsPopover: UIView {
     }
     
     func commonInit() {
+        
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.layer.cornerRadius = 10
+        self.layer.shadowOffset = CGSize(width:2, height:2)
+        self.layer.shadowRadius = 4
+        self.layer.shadowOpacity = 0.4
+        
         setupColorLabel()
-        setupColorButtonPanel()
         setupColorButtons()
         setupBrightnessLabel()
         setupBrightnessSlider()
@@ -61,17 +69,9 @@ class SettingsPopover: UIView {
         self.colorLabel.attributedText = attributedString
         self.colorLabel.textColor = labelTextColor
         self.colorLabel.font = labelFont
-        self.addSubview(self.colorLabel)
-    }
-    
-    func setupColorButtonPanel() {
-        self.colorButtonPanel = UIView()
-        self.colorButtonPanel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(colorButtonPanel)
     }
     
     func setupColorButtons() {
-        
         self.colorButtons = []
         
         let numButtons = self.delegate.colorPalette(in:self).numColors
@@ -82,7 +82,6 @@ class SettingsPopover: UIView {
             button.layer.cornerRadius = 8.0
             colorButtons.append(button)
             button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
-            colorButtonPanel.addSubview(button)
         }
     }
     
@@ -95,7 +94,6 @@ class SettingsPopover: UIView {
         self.brightnessLabel.attributedText = attributedString
         self.brightnessLabel.textColor = labelTextColor
         self.brightnessLabel.font = labelFont
-        self.addSubview(self.brightnessLabel)
     }
     
     func setupBrightnessSlider() {
@@ -106,95 +104,59 @@ class SettingsPopover: UIView {
         self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
         self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
         self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
-        self.addSubview(self.brightnessSlider)
     }
     
     func setupLayoutContraints() {
         
-        let views : [String:Any] = ["colorLabel" : self.colorLabel, "colorButtonPanel" : self.colorButtonPanel, "brightnessLabel" : self.brightnessLabel, "brightnessSlider" : self.brightnessSlider]
+        setupColorButtonGridLayout()
         
-        // colorLabel
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-30-[colorLabel]-30-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-20-[colorLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.verticalStackView = UIStackView(arrangedSubviews: [self.colorLabel, self.colorButtonGrid, self.brightnessLabel, self.brightnessSlider])
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .leading
+        verticalStackView.spacing = 10
+        self.addSubview(verticalStackView)
         
-        // colorButtonPanel
-        NSLayoutConstraint(item:self.colorButtonPanel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:self.colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorLabel]-10-[colorButtonPanel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        verticalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:16.0).isActive = true
+        verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-16.0).isActive = true
+        verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:16.0).isActive = true
+        verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-16.0).isActive = true
+
+        self.brightnessSlider.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor).isActive = true
+    }
+
+    func setupColorButtonGridLayout() {
         
-        // brightnessLabel
-        NSLayoutConstraint(item:self.brightnessLabel, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:self.brightnessLabel, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[colorButtonPanel]-24-[brightnessLabel]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.colorButtonGrid = UIStackView()
+        self.colorButtonGrid.translatesAutoresizingMaskIntoConstraints = false
+        self.colorButtonGrid.axis = .vertical
+        self.colorButtonGrid.spacing = 10
         
-        // brightnessSlider
-        NSLayoutConstraint(item:self.brightnessSlider, attribute:.left, relatedBy:.equal, toItem:self.colorLabel, attribute:.left, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:self.brightnessSlider, attribute:.right, relatedBy:.equal, toItem:self.colorLabel, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[brightnessLabel]-1-[brightnessSlider]-18-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        
-        // colorButtons & colorButtonPanel
-        let numColumns = 4
-        var col = 0
-        var row = 0
-        var prevButton : UIButton? = nil
-        var lastButtonInFirstRow : UIButton? = nil
-        
+        var rowStackView : UIStackView?
         for button in self.colorButtons {
             
-            let views : [String:Any]
+            button.widthAnchor.constraint(equalToConstant: 32).isActive = true
+            button.heightAnchor.constraint(equalTo:button.widthAnchor).isActive = true
             
-            if let prev = prevButton {
-                views = ["button" : button, "prevButton" : prev]
-            } else {
-                views = ["button" : button]
+            if rowStackView == nil {
+                rowStackView = UIStackView()
+                rowStackView?.translatesAutoresizingMaskIntoConstraints = false
+                rowStackView!.axis = .horizontal
+                rowStackView!.spacing = 10
+                
+                self.colorButtonGrid.addArrangedSubview(rowStackView!)
             }
             
-            // width and height
-            NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-            NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[button(==32)]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+            rowStackView!.addArrangedSubview(button)
             
-            // x position
-            if col == 0 {
-                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-            } else {
-                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+            if (rowStackView!.arrangedSubviews.count == 4) {
+                rowStackView = nil
             }
-            
-            // y position
-            if row == 0 {
-                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-            } else if col == 0 {
-                NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[prevButton]-10-[button]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-            } else {
-                NSLayoutConstraint(item:button, attribute:.top, relatedBy:.equal, toItem:prevButton, attribute:.top, multiplier:1.0, constant:0.0).isActive = true
-            }
-            
-            if row == 0 {
-                lastButtonInFirstRow = button
-            }
-            prevButton = button
-            
-            // advance to next grid position
-            col += 1
-            if col == numColumns {
-                col = 0
-                row += 1
-            }
-        }
-        
-        // right edge of colorButtonPanel
-        if let rightMostButton = lastButtonInFirstRow {
-            NSLayoutConstraint(item:colorButtonPanel, attribute:.right, relatedBy:.equal, toItem:rightMostButton, attribute:.right, multiplier:1.0, constant:0.0).isActive = true
-        }
-        
-        // bottom edge of colorButtonPanel
-        if let bottomMostButton = prevButton {
-            NSLayoutConstraint(item:colorButtonPanel, attribute:.bottom, relatedBy:.equal, toItem:bottomMostButton, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
         }
     }
     
     func refreshButtonColors() {
-        
+ 
         let numColors = self.colorButtons.count
         
         for index in 0..<numColors {
