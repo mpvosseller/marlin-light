@@ -43,32 +43,22 @@ class MainViewController: UIViewController {
         self.settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
         self.settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
         view.addSubview(self.settingsButton)
-        
-        
+                
         // layout views
-        let views : [String:Any] = ["label" : label, "imageView" : imageView, "settingsButton" : self.settingsButton]
-        
-        // label
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"|-8-[label]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:|-41-[label]", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo:view.trailingAnchor).isActive = true
+        label.topAnchor.constraint(equalTo:topLayoutGuide.bottomAnchor, constant:16).isActive = true
         label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-
-        // imageView
-        NSLayoutConstraint(item:imageView, attribute:.centerX, relatedBy:.equal, toItem:view, attribute:.centerX, multiplier:1.0, constant:0.0).isActive = true
-        NSLayoutConstraint(item:imageView, attribute:.top, relatedBy:.equal, toItem:label, attribute:.bottom, multiplier:1.0, constant:-4.0).isActive = true
-        NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.lessThanOrEqual, toItem:view, attribute:.bottom, multiplier:1.0, constant:0.0).isActive = true
         
-        let c = NSLayoutConstraint(item:imageView, attribute:.bottom, relatedBy:.equal, toItem:view, attribute:.bottom, multiplier:1.0, constant:-10.0)
-        c.priority = UILayoutPriorityDefaultLow
-        c.isActive = true
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: (image.size.width / image.size.height)).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: label.bottomAnchor, constant:-4).isActive = true
+        imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomLayoutGuide.topAnchor).isActive = true
         
-        let aspectRatio = image.size.width / image.size.height
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: aspectRatio).isActive = true
-        
-        // settingsButton
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:"V:[settingsButton(==54)]-8-|", options:NSLayoutFormatOptions(rawValue:0), metrics:nil, views:views))
+        self.settingsButton.widthAnchor.constraint(equalToConstant: 54).isActive = true
+        self.settingsButton.heightAnchor.constraint(equalTo: self.settingsButton.widthAnchor).isActive = true
+        self.settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.settingsButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant:-8).isActive = true
     }
         
     lazy var settingsPopover : SettingsPopover = {
