@@ -15,6 +15,10 @@ class MainViewController: UIViewController {
     let colorPalette = ColorPalette()
     let settings = Settings()
     
+    static let labelFontName = "Zapfino"
+    static let labelFontSizeRegular : CGFloat = 31.0
+    static let labelFontSizeCompact : CGFloat = 23.0
+    
     
     override func loadView() {
         
@@ -24,7 +28,7 @@ class MainViewController: UIViewController {
         self.label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Marlin Light"
-        label.font = UIFont(name:"Zapfino", size:31.0)
+        label.font = UIFont(name:MainViewController.labelFontName, size:MainViewController.labelFontSizeRegular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.25
         label.textColor = UIColor.black
@@ -65,13 +69,11 @@ class MainViewController: UIViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
+        var fontSize = MainViewController.labelFontSizeRegular
         if self.traitCollection.verticalSizeClass == .compact {
-            label.font = UIFont(name:"Zapfino", size:23.0)
-        } else {
-            label.font = UIFont(name:"Zapfino", size:31.0)
+            fontSize = MainViewController.labelFontSizeCompact
         }
-        
+        label.font = UIFont(name:MainViewController.labelFontName, size:fontSize)
         super.traitCollectionDidChange(previousTraitCollection)
     }
     
