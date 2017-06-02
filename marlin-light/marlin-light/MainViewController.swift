@@ -9,16 +9,16 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    
-    var settingsButton: UIButton!
-    var label: UILabel!
-    let colorPalette = ColorPalette()
-    let settings = Settings()
-    
+
     static let labelFontName = "Zapfino"
     static let labelFontSizeRegular : CGFloat = 31.0
     static let labelFontSizeCompact : CGFloat = 23.0
     
+    let colorPalette = ColorPalette()
+    let settings = Settings()
+
+    var settingsButton: UIButton!
+    var label: UILabel!
     
     override func loadView() {
         
@@ -26,15 +26,15 @@ class MainViewController: UIViewController {
         updateBackgroundColor()
 
         self.label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Marlin Light"
-        label.font = UIFont(name:MainViewController.labelFontName, size:MainViewController.labelFontSizeRegular)
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.25
-        label.textColor = UIColor.black
-        label.alpha = 0.1
-        label.textAlignment = .center
-        view.addSubview(label)
+        self.label.translatesAutoresizingMaskIntoConstraints = false
+        self.label.text = "Marlin Light"
+        self.label.font = UIFont(name:MainViewController.labelFontName, size:MainViewController.labelFontSizeRegular)
+        self.label.adjustsFontSizeToFitWidth = true
+        self.label.minimumScaleFactor = 0.25
+        self.label.textColor = UIColor.black
+        self.label.alpha = 0.1
+        self.label.textAlignment = .center
+        view.addSubview(self.label)
         
         let image = UIImage(named:"marlin")!
         let imageView = UIImageView(image:image)
@@ -51,14 +51,14 @@ class MainViewController: UIViewController {
         view.addSubview(self.settingsButton)
         
         // layout views
-        label.topAnchor.constraint(equalTo:topLayoutGuide.bottomAnchor, constant:16.0).isActive = true
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        self.label.topAnchor.constraint(equalTo:topLayoutGuide.bottomAnchor, constant:16.0).isActive = true
+        self.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
+        self.label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        self.label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         
-        imageView.topAnchor.constraint(equalTo: label.bottomAnchor, constant:-8.0).isActive = true
+        imageView.topAnchor.constraint(equalTo: self.label.bottomAnchor, constant:-8.0).isActive = true
         imageView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant:-4.0).isActive = true
         imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
@@ -73,7 +73,7 @@ class MainViewController: UIViewController {
         if self.traitCollection.verticalSizeClass == .compact {
             fontSize = MainViewController.labelFontSizeCompact
         }
-        label.font = UIFont(name:MainViewController.labelFontName, size:fontSize)
+        self.label.font = UIFont(name:MainViewController.labelFontName, size:fontSize)
         super.traitCollectionDidChange(previousTraitCollection)
     }
     
