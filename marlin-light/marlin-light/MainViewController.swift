@@ -11,15 +11,17 @@ import UIKit
 class MainViewController: UIViewController {
     
     var settingsButton: UIButton!
+    var label: UILabel!
     let colorPalette = ColorPalette()
     let settings = Settings()
+    
     
     override func loadView() {
         
         self.view = UIView()
         updateBackgroundColor()
 
-        let label = UILabel()
+        self.label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Marlin Light"
         label.font = UIFont(name:"Zapfino", size:31.0)
@@ -32,6 +34,7 @@ class MainViewController: UIViewController {
         
         let image = UIImage(named:"marlin")!
         let imageView = UIImageView(image:image)
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0.03
         view.addSubview(imageView)
@@ -42,24 +45,36 @@ class MainViewController: UIViewController {
         self.settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
         self.settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
         view.addSubview(self.settingsButton)
-                
-        // layout views
-        label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo:view.trailingAnchor).isActive = true
-        label.topAnchor.constraint(equalTo:topLayoutGuide.bottomAnchor, constant:16).isActive = true
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: (image.size.width / image.size.height)).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: label.bottomAnchor, constant:-4).isActive = true
-        imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomLayoutGuide.topAnchor).isActive = true
+        // layout views
+        label.topAnchor.constraint(equalTo:topLayoutGuide.bottomAnchor, constant:16.0).isActive = true
+        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        
+        imageView.topAnchor.constraint(equalTo: label.bottomAnchor, constant:-8.0).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant:-4.0).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         self.settingsButton.widthAnchor.constraint(equalToConstant: 54).isActive = true
         self.settingsButton.heightAnchor.constraint(equalTo: self.settingsButton.widthAnchor).isActive = true
         self.settingsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         self.settingsButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant:-8).isActive = true
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
+        if self.traitCollection.verticalSizeClass == .compact {
+            label.font = UIFont(name:"Zapfino", size:23.0)
+        } else {
+            label.font = UIFont(name:"Zapfino", size:31.0)
+        }
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+    }
+    
     lazy var settingsPopover : SettingsPopover = {
         
         let popover = SettingsPopover(delegate:self)
