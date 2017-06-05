@@ -9,6 +9,5 @@ Really though this was just a way to practice modern Swift, Auto Layout, and Ske
 
 ## Acknowledgements
 
-The settings (cog) image is from [Entypo](http://www.entypo.com) by Daniel Bruce and available under the license [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
-
-The [marlin image](https://thenounproject.com/term/marlin/11436/) is by Gilad Fried and available under the license [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us).
+- The settings (cog) image is from [Entypo](http://www.entypo.com) by Daniel Bruce and available under the license [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+- The [marlin image](https://thenounproject.com/term/marlin/11436/) is by Gilad Fried and available under the license [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us).
