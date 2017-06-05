@@ -7,7 +7,7 @@ My friend Marlin asked for this app because he reads physical books in a dark ro
 Really though this was just a way to practice modern Swift, Auto Layout, and Sketch.
 
 
-##Acknowledgements
+## Acknowledgements
 
 The settings (cog) image is from [Entypo](http://www.entypo.com) by Daniel Bruce and available under the license [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
