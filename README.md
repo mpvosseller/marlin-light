@@ -6,6 +6,10 @@ My friend Marlin asked for this app because he reads physical books in a dark ro
 
 Really though this was just a way to practice modern Swift, Auto Layout, and Sketch.
 
+## Screenshots
+![home screen](screenshots/home.png)
+![settings](screenshots/home.png)
+
 
 ## Acknowledgements
 
