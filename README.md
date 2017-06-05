@@ -8,7 +8,7 @@ Really though this was just a way to practice modern Swift, Auto Layout, and Ske
 
 ## Screenshots
 ![home screen](screenshots/home.png)
-![settings](screenshots/home.png)
+![settings](screenshots/settings.png)
 
 
 ## Acknowledgements
