@@ -55,8 +55,8 @@ class MainViewController: UIViewController {
         self.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         self.label.leadingAnchor.constraint(equalTo:view.leadingAnchor).isActive = true
         self.label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        self.label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        self.label.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        self.label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        self.label.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         
         imageView.topAnchor.constraint(equalTo: self.label.bottomAnchor, constant:-8.0).isActive = true
         imageView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant:-4.0).isActive = true
@@ -86,7 +86,7 @@ class MainViewController: UIViewController {
         
         // layout views
         let bottomConstraint = popover.bottomAnchor.constraint(equalTo: self.settingsButton.topAnchor, constant:10)
-        bottomConstraint.priority = UILayoutPriorityDefaultLow
+        bottomConstraint.priority = UILayoutPriority.defaultLow
         bottomConstraint.isActive = true
         popover.trailingAnchor.constraint(equalTo:self.settingsButton.leadingAnchor, constant:10.0).isActive = true
         popover.topAnchor.constraint(greaterThanOrEqualTo:self.topLayoutGuide.bottomAnchor, constant:2.0).isActive = true
@@ -104,7 +104,7 @@ class MainViewController: UIViewController {
         })
     }
     
-    func handleSettingsButtonPressed(_ sender: Any) {
+    @objc func handleSettingsButtonPressed(_ sender: Any) {
         setSettingsPopoverVisible(!isSettingsPopoverVisible())
     }
     

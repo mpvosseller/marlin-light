@@ -65,7 +65,7 @@ class SettingsPopover: UIView {
         self.colorLabel.translatesAutoresizingMaskIntoConstraints = false
         let text = "COLOR"
         let attributedString = NSMutableAttributedString(string:text)
-        attributedString.addAttribute(NSKernAttributeName, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
+        attributedString.addAttribute(NSAttributedStringKey.kern, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
         self.colorLabel.attributedText = attributedString
         self.colorLabel.textColor = labelTextColor
         self.colorLabel.font = labelFont
@@ -90,7 +90,7 @@ class SettingsPopover: UIView {
         self.brightnessLabel.translatesAutoresizingMaskIntoConstraints = false
         let text = "BRIGHTNESS"
         let attributedString = NSMutableAttributedString(string:text)
-        attributedString.addAttribute(NSKernAttributeName, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
+        attributedString.addAttribute(NSAttributedStringKey.kern, value:labelCharacterSpacing, range: NSMakeRange(0, text.characters.count))
         self.brightnessLabel.attributedText = attributedString
         self.brightnessLabel.textColor = labelTextColor
         self.brightnessLabel.font = labelFont
@@ -134,10 +134,10 @@ class SettingsPopover: UIView {
         self.verticalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant:-30.0).isActive = true
         self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant:21.0).isActive = true
         self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-30.0).isActive = true
-
+        
         self.brightnessSlider.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor).isActive = true
     }
-
+    
     func setupColorButtonGridLayoutContraints() {
         
         self.colorButtonGrid = UIStackView()
@@ -168,7 +168,7 @@ class SettingsPopover: UIView {
     }
     
     func refreshButtonColors() {
- 
+        
         let numColors = self.colorButtons.count
         
         for index in 0..<numColors {
