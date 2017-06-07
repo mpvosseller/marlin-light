@@ -81,7 +81,7 @@ class SettingsPopover: UIView {
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 8.0
             colorButtons.append(button)
-            button.addTarget(self, action:#selector(SettingsPopover.colorButtonPressed(_:)), for:.touchUpInside)
+            button.addTarget(self, action:#selector(colorButtonPressed(_:)), for:.touchUpInside)
         }
     }
     
@@ -101,9 +101,9 @@ class SettingsPopover: UIView {
         self.brightnessSlider.translatesAutoresizingMaskIntoConstraints = false
         self.brightnessSlider.minimumValue = 0.50
         self.brightnessSlider.tintColor = self.delegate.colorPalette(in:self).defaultColor()
-        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderValueChanaged(_:)), for:.valueChanged)
-        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpInside)
-        self.brightnessSlider.addTarget(self, action:#selector(SettingsPopover.sliderStopped(_:)), for:.touchUpOutside)
+        self.brightnessSlider.addTarget(self, action:#selector(sliderValueChanaged(_:)), for:.valueChanged)
+        self.brightnessSlider.addTarget(self, action:#selector(sliderStopped(_:)), for:.touchUpInside)
+        self.brightnessSlider.addTarget(self, action:#selector(sliderStopped(_:)), for:.touchUpOutside)
     }
     
     func setupLayoutContraints() {

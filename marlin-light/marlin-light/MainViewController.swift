@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
         self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
         self.settingsButton.setImage(UIImage(named: "cog"), for: .normal)
         self.settingsButton.tintColor = UIColor(white: 0, alpha: 0.5)
-        self.settingsButton.addTarget(self, action:#selector(MainViewController.handleSettingsButtonPressed(_:)), for:.touchUpInside)
+        self.settingsButton.addTarget(self, action:#selector(handleSettingsButtonPressed(_:)), for:.touchUpInside)        
         view.addSubview(self.settingsButton)
         
         // layout views
